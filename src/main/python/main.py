@@ -1,23 +1,36 @@
 import sys
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtWidgets import (
+    QMainWindow,
+    QLabel,
+    QWidget,
+    QPushButton,
+    QVBoxLayout
+)
 
 
-appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
-version = appctxt.build_settings["version"]
+# appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
+# version = appctxt.build_settings["version"]
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Hellow World v" + version)
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super().__init__()
+#         self.setWindowTitle("Hellow World v" + version)
+#         w = QWidget()
+#         layout = QVBoxLayout()
+#         btn = QPushButton("press")
+#         btn.setIcon(QIcon("./Resource/"))
+#         layout.addWidget(btn)
+#         w.setLayout(layout)
 
-        self.resize(250, 120)
+#         self.setCentralWidget(w)
 
-    
 
-if __name__ == '__main__':
-    window = MainWindow()
-    window.show()
-    exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
-    sys.exit(exit_code)
+# if __name__ == '__main__':
+#     window = MainWindow()
+#     window.show()
+#     exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
+#     sys.exit(exit_code)
