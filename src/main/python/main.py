@@ -4,6 +4,7 @@ from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import (
+    QApplication,
     QMainWindow,
     QLabel,
     QWidget,
