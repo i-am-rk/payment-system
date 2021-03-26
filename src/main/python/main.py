@@ -11,17 +11,16 @@ from PyQt5.QtWidgets import (
     QPushButton,
     QVBoxLayout
 )
+sys.path.append("/home/liam/Project/payment-system/")
+
+import UI
 
 appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
 version = appctxt.build_settings["version"]
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        btn = QPushButton("Pressed")
-        btn.setIconSize(QSize(20,20))
-        btn.setIcon(QIcon("resources/Icons/home-black.svg"))
-        self.setCentralWidget(btn)
+        UI.ui_1.test_function()
 if __name__ == '__main__':
     window = MainWindow()
     window.show()
