@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Icons/menu.svg</file>
     <file>Icons/anchor-black.svg</file>
     <file>Icons/home-black.svg</file>
     <file>Icons/plus-black.svg</file>
