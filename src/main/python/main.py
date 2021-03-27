@@ -13,14 +13,19 @@ from PyQt5.QtWidgets import (
 )
 sys.path.append("/home/liam/Project/payment-system/")
 
-import UI
+# import ui files
+from UI import mainwindow 
 
-appctxt = ApplicationContext()       # 1. Instantiate ApplicationContext
+# 1. Instantiate ApplicationContext
+appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        UI.ui_1.test_function()
+
+# Main Window
+class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
+    def __init__(self, *args, obj=None, **Kwargs):
+        super(MainWindow, self).__init__(*args, **Kwargs)
+        self.setupUi(self)
+        
 if __name__ == '__main__':
     window = MainWindow()
     window.show()

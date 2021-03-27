@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>Icons/anchor-black.svg</file>
+    <file>Icons/home-black.svg</file>
+    <file>Icons/plus-black.svg</file>
+    <file>Icons/settings-black.svg</file>
+    <file>Icons/subs-black.svg</file>
+  </qresource>
+</RCC>
