@@ -75,22 +75,22 @@ class Ui_MainWindow(object):
                 self.available_label.setAlignment(QtCore.Qt.AlignCenter)
                 self.available_label.setObjectName("available_label")
                 self.horizontalLayout.addWidget(self.available_label)
-                self.date_label = QtWidgets.QLabel(self.top_bar)
-                font = QtGui.QFont()
-                font.setBold(True)
-                font.setWeight(75)
-                self.date_label.setFont(font)
-                self.date_label.setAlignment(QtCore.Qt.AlignCenter)
-                self.date_label.setObjectName("date_label")
-                self.horizontalLayout.addWidget(self.date_label)
                 self.time_label = QtWidgets.QLabel(self.top_bar)
                 font = QtGui.QFont()
                 font.setBold(True)
                 font.setWeight(75)
                 self.time_label.setFont(font)
                 self.time_label.setAlignment(QtCore.Qt.AlignCenter)
-                self.time_label.setObjectName("time_label")
+                self.time_label.setObjectName("date_label")
                 self.horizontalLayout.addWidget(self.time_label)
+                self.date_label = QtWidgets.QLabel(self.top_bar)
+                font = QtGui.QFont()
+                font.setBold(True)
+                font.setWeight(75)
+                self.date_label.setFont(font)
+                self.date_label.setAlignment(QtCore.Qt.AlignCenter)
+                self.date_label.setObjectName("time_label")
+                self.horizontalLayout.addWidget(self.date_label)
                 self.frame = QtWidgets.QFrame(self.top_bar)
                 self.frame.setMaximumSize(QtCore.QSize(50, 16777215))
                 self.frame.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -137,13 +137,13 @@ class Ui_MainWindow(object):
         "    border-left: 8px solid none;\n"
         "}\n"
         "QPushButton:hover{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "    color:#FFFFFF;\n"
         "}\n"
         "QPushButton:pressed{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "}")
                 self.home_btn.setCheckable(True)
                 self.home_btn.setFont(menu_font)
@@ -163,13 +163,13 @@ class Ui_MainWindow(object):
         "    border-left: 8px solid none;\n"
         "}\n"
         "QPushButton:hover{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "    color:#FFFFFF;\n"
         "}\n"
         "QPushButton:pressed{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "}")
 
                 self.anchor_btn.setCheckable(True)
@@ -190,13 +190,13 @@ class Ui_MainWindow(object):
         "    border-left: 8px solid none;\n"
         "}\n"
         "QPushButton:hover{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "    color:#FFFFFF;\n"
         "}\n"
         "QPushButton:pressed{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "}")
                 self.sub_btn.setCheckable(True)
                 self.sub_btn.setFont(menu_font)
@@ -216,13 +216,13 @@ class Ui_MainWindow(object):
         "    border-left: 8px solid none;\n"
         "}\n"
         "QPushButton:hover{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "    color:#FFFFFF;\n"
         "}\n"
         "QPushButton:pressed{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "}")
                 self.settings_btn.setCheckable(True)
                 self.settings_btn.setFont(menu_font)
@@ -242,13 +242,14 @@ class Ui_MainWindow(object):
         "    border-left: 8px solid none;\n"
         "}\n"
         "QPushButton:hover{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        # "    background-color:#00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "    color:#FFFFFF;\n"
         "}\n"
         "QPushButton:pressed{\n"
-        "    background-color:#00F506;\n"
-        "    border-left:8px solid #00F506;\n"
+        "    background-color:#1FB141;\n"
+        "    border-left:8px solid #1FB141;\n"
         "}")
                 self.add_btn.setCheckable(True)
                 self.add_btn.setFont(menu_font)
@@ -329,9 +330,11 @@ class Ui_MainWindow(object):
         def retranslateUi(self, MainWindow):
                 _translate = QtCore.QCoreApplication.translate
                 MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+
                 self.available_label.setText(_translate("MainWindow", "Available"))
+                self.time_label.setText(_translate("MainWindow", "Time"))
                 self.date_label.setText(_translate("MainWindow", "Date"))
-                self.time_label.setText(_translate("MainWindow", "TextLabel"))
+
                 self.home_btn.setToolTip(_translate("MainWindow", "Home"))
                 self.home_btn.setText(_translate("MainWindow", "Home"))
                 self.anchor_btn.setToolTip(_translate("MainWindow", "Parked"))
@@ -342,7 +345,7 @@ class Ui_MainWindow(object):
                 self.settings_btn.setText(_translate("MainWindow", "Settings"))
                 self.add_btn.setToolTip(_translate("MainWindow", "Add Customer"))
                 self.add_btn.setText(_translate("MainWindow", "Add Customer"))
-                
+
                 self.label_5.setText(_translate("MainWindow", "Page one"))
                 self.label_4.setText(_translate("MainWindow", "Page Two"))
                 self.label_6.setText(_translate("MainWindow", "Page Three"))

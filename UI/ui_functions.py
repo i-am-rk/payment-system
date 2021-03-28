@@ -78,15 +78,17 @@ def change_page(self, idx, status):
 
 def buttonActive(btn):
     style = btn.styleSheet()
-    style = style + ("QPushButton{background-color:#00F506;}")
+    style = style + ("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}")
     btn.setStyleSheet(style)
+    btn.setChecked(True)
     btn.setEnabled(False)
 
 
 def buttonNotActive(btn):
     style = btn.styleSheet()
-    style = style.replace("QPushButton{background-color:#00F506;}","")
+    style = style.replace("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}","")
     btn.setStyleSheet(style)
+    btn.setChecked(False)
     btn.setEnabled(True)
 
 from UI import resource_rc
