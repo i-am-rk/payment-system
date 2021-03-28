@@ -14,7 +14,9 @@ from PyQt5.QtWidgets import (
 sys.path.append("/home/liam/Project/payment-system/")
 
 # import ui files
-from UI import mainwindow 
+from UI import mainwindow
+# from UI.ui_functions import UI_Functions as uif
+from UI import ui_functions as uif
 
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
@@ -25,7 +27,9 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, *args, obj=None, **Kwargs):
         super(MainWindow, self).__init__(*args, **Kwargs)
         self.setupUi(self)
-        
+        self.menu_toggle_btn.clicked.connect(lambda status, self = self:uif.toggle_menu(self, status))
+
+
 if __name__ == '__main__':
     window = MainWindow()
     window.show()

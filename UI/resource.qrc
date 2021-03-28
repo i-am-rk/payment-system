@@ -1,10 +1,10 @@
 <RCC>
   <qresource prefix="Icons">
-    <file>Icons/menu.svg</file>
-    <file>Icons/anchor-black.svg</file>
-    <file>Icons/home-black.svg</file>
-    <file>Icons/plus-black.svg</file>
-    <file>Icons/settings-black.svg</file>
-    <file>Icons/subs-black.svg</file>
+    <file>Icons/home.png</file>
+    <file>Icons/menu.png</file>
+    <file>Icons/add.png</file>
+    <file>Icons/anchor.png</file>
+    <file>Icons/settings.png</file>
+    <file>Icons/sub.png</file>
   </qresource>
 </RCC>
