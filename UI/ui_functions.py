@@ -29,7 +29,6 @@ GLOBAL_SIDE_PANEL_LENTH = 160
 #FUNCTION:Toggle Menu
 def toggle_menu(self, status):
     if status:
-        print("inside toggle")
         self.anim1 = QPropertyAnimation(self.menus, b"maximumWidth")
         self.anim2 = QPropertyAnimation(self.menus, b"minimumWidth")
 
@@ -61,6 +60,34 @@ def toggle_menu(self, status):
         self.anim2.start()
 
 # FUNCTION:Change Page
-def change_page(self):
-    print
+def change_page(self, idx, status):
+    menus = [
+        self.home_btn,
+        self.anchor_btn,
+        self.sub_btn,
+        self.settings_btn,
+        self.add_btn
+    ]
+    for i in range(len(menus)):
+        if status == True and i == idx:
+            self.Pages.setCurrentIndex(i)
+            buttonActive(menus[i])
+        else:
+            buttonNotActive(menus[i])
     # SUBF:change button state
+
+def buttonActive(btn):
+    style = btn.styleSheet()
+    style = style + ("QPushButton{background-color:#00F506;}")
+    btn.setStyleSheet(style)
+    btn.setEnabled(False)
+
+
+def buttonNotActive(btn):
+    style = btn.styleSheet()
+    style = style.replace("QPushButton{background-color:#00F506;}","")
+    btn.setStyleSheet(style)
+    btn.setEnabled(True)
+
+from UI import resource_rc
+

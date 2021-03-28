@@ -268,28 +268,62 @@ class Ui_MainWindow(object):
                 self.divider.setLineWidth(0)
                 self.divider.setObjectName("divider")
                 self.horizontalLayout_2.addWidget(self.divider)
+# -----------------Pages setup-------------------
                 self.Pages = QtWidgets.QStackedWidget(self.main_container)
                 self.Pages.setObjectName("Pages")
-                self.page = QtWidgets.QWidget()
-                self.page.setObjectName("page")
-                self.label_5 = QtWidgets.QLabel(self.page)
+
+                # Page One
+                self.page1 = QtWidgets.QWidget()
+                self.page1.setObjectName("page1")
+                self.page1.setStyleSheet("QWidget{background-color:red;}")
+                self.label_5 = QtWidgets.QLabel(self.page1)
                 self.label_5.setGeometry(QtCore.QRect(320, 210, 141, 51))
                 self.label_5.setAlignment(QtCore.Qt.AlignCenter)
                 self.label_5.setObjectName("label_5")
-                self.Pages.addWidget(self.page)
-                self.page_2 = QtWidgets.QWidget()
-                self.page_2.setObjectName("page_2")
-                self.label_4 = QtWidgets.QLabel(self.page_2)
+                self.Pages.addWidget(self.page1)
+
+                # Page Two
+                self.page2 = QtWidgets.QWidget()
+                self.page2.setObjectName("page_2")
+                self.label_4 = QtWidgets.QLabel(self.page2)
                 self.label_4.setGeometry(QtCore.QRect(360, 220, 141, 51))
                 self.label_4.setAlignment(QtCore.Qt.AlignCenter)
                 self.label_4.setObjectName("label_4")
-                self.Pages.addWidget(self.page_2)
+                self.Pages.addWidget(self.page2)
+
+                # Page Three
+                self.page3 = QtWidgets.QWidget()
+                self.page3.setObjectName("page_3")
+                self.label_6 = QtWidgets.QLabel(self.page3)
+                self.label_6.setGeometry(QtCore.QRect(360, 220, 141, 51))
+                self.label_6.setAlignment(QtCore.Qt.AlignCenter)
+                self.label_6.setObjectName("label_6")
+                self.Pages.addWidget(self.page3)
+
+                # Page Four
+                self.page4 = QtWidgets.QWidget()
+                self.page4.setObjectName("page_4")
+                self.label_7 = QtWidgets.QLabel(self.page4)
+                self.label_7.setGeometry(QtCore.QRect(360, 220, 141, 51))
+                self.label_7.setAlignment(QtCore.Qt.AlignCenter)
+                self.label_7.setObjectName("label_4")
+                self.Pages.addWidget(self.page4)
+
+                # Page Five
+                self.page5 = QtWidgets.QWidget()
+                self.page5.setObjectName("page_5")
+                self.label_8 = QtWidgets.QLabel(self.page5)
+                self.label_8.setGeometry(QtCore.QRect(360, 220, 141, 51))
+                self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+                self.label_8.setObjectName("label_6")
+                self.Pages.addWidget(self.page5)
+                
                 self.horizontalLayout_2.addWidget(self.Pages)
                 self.verticalLayout.addWidget(self.main_container)
                 MainWindow.setCentralWidget(self.centralwidget)
 
                 self.retranslateUi(MainWindow)
-                self.Pages.setCurrentIndex(0)
+                self.Pages.setCurrentIndex(3)
                 QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         def retranslateUi(self, MainWindow):
@@ -308,7 +342,11 @@ class Ui_MainWindow(object):
                 self.settings_btn.setText(_translate("MainWindow", "Settings"))
                 self.add_btn.setToolTip(_translate("MainWindow", "Add Customer"))
                 self.add_btn.setText(_translate("MainWindow", "Add Customer"))
+                
                 self.label_5.setText(_translate("MainWindow", "Page one"))
                 self.label_4.setText(_translate("MainWindow", "Page Two"))
+                self.label_6.setText(_translate("MainWindow", "Page Three"))
+                self.label_7.setText(_translate("MainWindow", "Page Four"))
+                self.label_8.setText(_translate("MainWindow", "Page Five"))
 # import resource_rc 
 from UI import resource_rc
