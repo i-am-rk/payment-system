@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from UI import styles
 
 class Ui_MainWindow(object):
         def __init__(self):
@@ -50,13 +50,9 @@ class Ui_MainWindow(object):
                 self.menu_toggle_btn = QtWidgets.QPushButton(self.top_bar)
                 self.menu_toggle_btn.setMaximumSize(QtCore.QSize(50, 50))
                 self.menu_toggle_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.menu_toggle_btn.setStyleSheet("QPushButton{\n"
-        "background-color: #00F506;\n"
-        "border:none;\n"
-        "background-image: url(:/Icons/Icons/menu.png);\n"
-        "background-repeat:no-repeat;\n"
-        "background-position:center;\n"
-        "}")
+                self.menu_toggle_btn.setStyleSheet(styles.toggle_btn +
+                "QPushButton{background-image: url(:/Icons/Icons/menu.png);}")
+                
                 self.menu_toggle_btn.setText("")
                 self.menu_toggle_btn.setCheckable(True)
                 self.menu_toggle_btn.setObjectName("menu_toggle_btn")
@@ -123,138 +119,58 @@ class Ui_MainWindow(object):
                 self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
                 self.verticalLayout_2.setSpacing(0)
                 self.verticalLayout_2.setObjectName("verticalLayout_2")
+                # home button style
+                menu_btn_style = styles.menu_btn + styles.menu_btn_hover + styles.menu_btn_pressed
                 self.home_btn = QtWidgets.QPushButton(self.menus)
                 self.home_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.home_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.home_btn.setStyleSheet("QPushButton{\n"
-        "    background-image: url(:/Icons/Icons/home.png);\n"
-        "    background-position: left center;\n"
-        "    background-repeat: no-repeat;\n"
-        "    background-color: none;\n"
-        "    text-align: left;\n"
-        "    padding-left: 45px;\n"
-        "    border:none;\n"
-        "    border-left: 8px solid none;\n"
-        "}\n"
-        "QPushButton:hover{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "    color:#FFFFFF;\n"
-        "}\n"
-        "QPushButton:pressed{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "}")
+                self.home_btn.setStyleSheet(menu_btn_style + 
+                "QPushButton{background-image:url(:/Icons/Icons/home.png)}")
                 self.home_btn.setCheckable(True)
                 self.home_btn.setFont(menu_font)
                 self.home_btn.setObjectName("home_btn")
                 self.verticalLayout_2.addWidget(self.home_btn)
+                
                 self.anchor_btn = QtWidgets.QPushButton(self.menus)
                 self.anchor_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.anchor_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.anchor_btn.setStyleSheet("QPushButton{\n"
-        "    background-image: url(:/Icons/Icons/anchor.png);\n"
-        "    background-position: left center;\n"
-        "    background-repeat: no-repeat;\n"
-        "    background-color: none;\n"
-        "    text-align: left;\n"
-        "    padding-left: 45px;\n"
-        "    border:none;\n"
-        "    border-left: 8px solid none;\n"
-        "}\n"
-        "QPushButton:hover{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "    color:#FFFFFF;\n"
-        "}\n"
-        "QPushButton:pressed{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "}")
-
+                self.anchor_btn.setStyleSheet(menu_btn_style + 
+                "QPushButton{background-image: url(:/Icons/Icons/anchor.png);}")
                 self.anchor_btn.setCheckable(True)
                 self.anchor_btn.setFont(menu_font)
                 self.anchor_btn.setObjectName("anchor_btn")
                 self.verticalLayout_2.addWidget(self.anchor_btn)
+                
                 self.sub_btn = QtWidgets.QPushButton(self.menus)
                 self.sub_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.sub_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.sub_btn.setStyleSheet("QPushButton{\n"
-        "    background-image: url(:/Icons/Icons/sub.png);\n"
-        "    background-position: left center;\n"
-        "    background-repeat: no-repeat;\n"
-        "    background-color: none;\n"
-        "    text-align: left;\n"
-        "    padding-left: 45px;\n"
-        "    border:none;\n"
-        "    border-left: 8px solid none;\n"
-        "}\n"
-        "QPushButton:hover{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "    color:#FFFFFF;\n"
-        "}\n"
-        "QPushButton:pressed{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "}")
+                self.sub_btn.setStyleSheet(menu_btn_style + 
+                "QPushButton{background-image: url(:/Icons/Icons/sub.png);}")
                 self.sub_btn.setCheckable(True)
                 self.sub_btn.setFont(menu_font)
                 self.sub_btn.setObjectName("sub_btn")
                 self.verticalLayout_2.addWidget(self.sub_btn)
+                
                 self.settings_btn = QtWidgets.QPushButton(self.menus)
                 self.settings_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.settings_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.settings_btn.setStyleSheet("QPushButton{\n"
-        "    background-image: url(:/Icons/Icons/settings.png);\n"
-        "    background-position: left center;\n"
-        "    background-repeat: no-repeat;\n"
-        "    background-color: none;\n"
-        "    text-align: left;\n"
-        "    padding-left: 45px;\n"
-        "    border:none;\n"
-        "    border-left: 8px solid none;\n"
-        "}\n"
-        "QPushButton:hover{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "    color:#FFFFFF;\n"
-        "}\n"
-        "QPushButton:pressed{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "}")
+                self.settings_btn.setStyleSheet(menu_btn_style + 
+                "QPushButton{background-image: url(:/Icons/Icons/settings.png);}")
                 self.settings_btn.setCheckable(True)
                 self.settings_btn.setFont(menu_font)
                 self.settings_btn.setObjectName("settings_btn")
                 self.verticalLayout_2.addWidget(self.settings_btn)
+                
                 self.add_btn = QtWidgets.QPushButton(self.menus)
                 self.add_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.add_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-                self.add_btn.setStyleSheet("QPushButton{\n"
-        "    background-image: url(:/Icons/Icons/add.png);\n"
-        "    background-position: left center;\n"
-        "    background-repeat: no-repeat;\n"
-        "    background-color: none;\n"
-        "    text-align: left;\n"
-        "    padding-left: 45px;\n"
-        "    border:none;\n"
-        "    border-left: 8px solid none;\n"
-        "}\n"
-        "QPushButton:hover{\n"
-        # "    background-color:#00F506;\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "    color:#FFFFFF;\n"
-        "}\n"
-        "QPushButton:pressed{\n"
-        "    background-color:#1FB141;\n"
-        "    border-left:8px solid #1FB141;\n"
-        "}")
+                self.add_btn.setStyleSheet(menu_btn_style + 
+                "QPushButton{background-image: url(:/Icons/Icons/add.png);}")
                 self.add_btn.setCheckable(True)
                 self.add_btn.setFont(menu_font)
                 self.add_btn.setObjectName("add_btn")
                 self.verticalLayout_2.addWidget(self.add_btn)
+                
                 spacerItem = QtWidgets.QSpacerItem(20, 299, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
                 self.verticalLayout_2.addItem(spacerItem)
                 self.horizontalLayout_2.addWidget(self.menus)
