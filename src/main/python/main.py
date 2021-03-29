@@ -19,6 +19,8 @@ from UI import mainwindow
 # from UI.ui_functions import UI_Functions as uif
 from UI import ui_functions as uif
 import globalvariables as gv 
+
+from UI.Pages import page1
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
@@ -27,15 +29,17 @@ version = appctxt.build_settings["version"]
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, *args, obj=None, **Kwargs):
         super(MainWindow, self).__init__(*args, **Kwargs)
+        self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         self.setupUi(self)
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
         self.setSizePolicy(sizePolicy)
+        self.setGeometry(0, 0,gv.WIDTH, gv.HEIGHT)
         self.setMaximumSize(QSize(gv.WIDTH, gv.HEIGHT))
+        # self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         
-    ###################################################################################
-    ### MainWindow SETUP START                                                         
-    ###################################################################################
-    
+        ###################################################################################
+        #region MainWindow SETUP                                                          
+
         # Toggle function
         self.menu_toggle_btn.clicked.connect(lambda status, self = self:uif.toggle_menu(self, status))
         
@@ -46,10 +50,10 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         self.settings_btn.clicked.connect(lambda status, self = self, idx = 3:uif.change_page(self, idx, status ))
         self.add_btn.clicked.connect(lambda status, self = self, idx = 4:uif.change_page(self, idx, status ))
         
-    ###################################################################################
-    ### MainWindow SETUP END                                                           
-    ###################################################################################
+        #endregion MainWindow SETUP                                                           
+        ###################################################################################
         
+
 
 if __name__ == '__main__':
     window = MainWindow()

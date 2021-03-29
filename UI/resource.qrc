@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Icons/car.png</file>
+    <file>Icons/motorcycle.png</file>
+    <file>Icons/scanner.png</file>
     <file>Icons/home.png</file>
     <file>Icons/menu.png</file>
     <file>Icons/add.png</file>
