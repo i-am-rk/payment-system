@@ -1,7 +1,7 @@
 import sys
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt, pyqtSignal
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import (
     QApplication,
@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import (
     QLabel,
     QWidget,
     QPushButton,
-    QVBoxLayout
+    QVBoxLayout,
+    QSizePolicy
 )
 sys.path.append("/home/liam/Project/payment-system/")
 
@@ -17,7 +18,7 @@ sys.path.append("/home/liam/Project/payment-system/")
 from UI import mainwindow
 # from UI.ui_functions import UI_Functions as uif
 from UI import ui_functions as uif
-
+import globalvariable as gv 
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
@@ -27,6 +28,10 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, *args, obj=None, **Kwargs):
         super(MainWindow, self).__init__(*args, **Kwargs)
         self.setupUi(self)
+        sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.MinimumExpanding)
+        self.setSizePolicy(sizePolicy)
+        self.setMaximumSize(QSize(gv.WIDTH, gv.HEIGHT))
+        
     ###################################################################################
     ### MainWindow SETUP START                                                         
     ###################################################################################

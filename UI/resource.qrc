@@ -7,4 +7,7 @@
     <file>Icons/settings.png</file>
     <file>Icons/sub.png</file>
   </qresource>
+  <qresource prefix="images">
+    <file>../resources/scenery1.jpg</file>
+  </qresource>
 </RCC>
