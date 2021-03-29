@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from UI import styles
+from UI.Pages import page1
 
 class Ui_MainWindow(object):
         def __init__(self):
@@ -190,13 +191,9 @@ class Ui_MainWindow(object):
                 self.Pages.setObjectName("Pages")
 
                 # Page One
-                self.page1 = QtWidgets.QWidget()
-                self.page1.setObjectName("page1")
-                self.page1.setStyleSheet("QWidget{background-color:red;}")
-                self.label_5 = QtWidgets.QLabel(self.page1)
-                self.label_5.setGeometry(QtCore.QRect(320, 210, 141, 51))
-                self.label_5.setAlignment(QtCore.Qt.AlignCenter)
-                self.label_5.setObjectName("label_5")
+                # self.page1 = QtWidgets.QWidget()
+                self.page1 = page1.Ui_Page()
+                self.page1.setupUi(self.page1)
                 self.Pages.addWidget(self.page1)
 
                 # Page Two
@@ -240,7 +237,7 @@ class Ui_MainWindow(object):
                 MainWindow.setCentralWidget(self.centralwidget)
 
                 self.retranslateUi(MainWindow)
-                self.Pages.setCurrentIndex(3)
+                self.Pages.setCurrentIndex(0)
                 QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
         def retranslateUi(self, MainWindow):
@@ -262,7 +259,7 @@ class Ui_MainWindow(object):
                 self.add_btn.setToolTip(_translate("MainWindow", "Add Customer"))
                 self.add_btn.setText(_translate("MainWindow", "Add Customer"))
 
-                self.label_5.setText(_translate("MainWindow", "Page one"))
+                # self.label_5.setText(_translate("MainWindow", "Page one"))
                 self.label_4.setText(_translate("MainWindow", "Page Two"))
                 self.label_6.setText(_translate("MainWindow", "Page Three"))
                 self.label_7.setText(_translate("MainWindow", "Page Four"))
