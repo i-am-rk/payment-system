@@ -18,7 +18,7 @@ sys.path.append("/home/liam/Project/payment-system/")
 from UI import mainwindow
 # from UI.ui_functions import UI_Functions as uif
 from UI import ui_functions as uif
-import globalvariable as gv 
+import globalvariables as gv 
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
