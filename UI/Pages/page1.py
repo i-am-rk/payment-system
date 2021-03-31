@@ -65,11 +65,11 @@ class Ui_Page(QtWidgets.QWidget):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem1)
-        self.label = QtWidgets.QLabel(self.feed_side)
+        self.feed = QtWidgets.QLabel(self.feed_side)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(self.feed.sizePolicy().hasHeightForWidth())
         self.feed.setSizePolicy(sizePolicy)
         self.feed.setMinimumSize(QtCore.QSize(420, 320))
         self.feed.setMaximumSize(QtCore.QSize(420, 320))
@@ -77,7 +77,7 @@ class Ui_Page(QtWidgets.QWidget):
         self.feed.setPixmap(QtGui.QPixmap(":/images/resources/scenery1.jpg"))
         self.feed.setScaledContents(True)
         self.feed.setObjectName("feed")
-        self.horizontalLayout_3.addWidget(self.label)
+        self.horizontalLayout_3.addWidget(self.feed)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
         #endregion VIDEO BLOCK
@@ -306,7 +306,7 @@ class Ui_Page(QtWidgets.QWidget):
                 self.setStyleSheet(qss.format(**style_vars))
         #endregion STYLE SHEET CONFIG
         #########################################################################
-        print(self.styleSheet())
+        # print(self.styleSheet())
         
     def retranslateUi(self, Page):
         _translate = QtCore.QCoreApplication.translate

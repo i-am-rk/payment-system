@@ -1,6 +1,7 @@
 
 import cv2 as cv 
-from PyQt5.QtCore import QRunnable, pyqtSignal, pyqtSlot, QObject
+from PyQt5.QtCore import QRunnable, pyqtSignal, pyqtSlot, QObject, Qt
+from PyQt5.QtGui import QImage
 
 
 import globalvariables as gv
@@ -22,7 +23,7 @@ class FeedSignals(QObject):
     Signals:
         `frame` emits current frame of feed
     """
-    frame = pyqtSignal(object)
+    cv_image = pyqtSignal(object)
     error = pyqtSignal(str)
     
 
@@ -40,24 +41,34 @@ class FeedWorker(QRunnable):
         self.args = args
         self.kwargs = kwargs
         self.signals = FeedSignals()
-    
+
+        print("inside worker init")
     # define run slot
+
     @pyqtSlot()
     def run(self):
         """
         Initialize the runner function of worker
         """
+        # for n in range(10):
+        #     print(n)
+        # print("inside worker run")
         try:
             while True:
                 ret, frame = cap.read()
                 rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-                # self.signals.frame.emit(rgb_img)
-                self.signals.frame.emit(rgb_img.shape)
-        
+                self.signals.cv_image.emit(rgb_img)
+
         except Exception as e:
             self.signals.error.emit(str(e))
         
-
+        # def cv_to_pixmap(cvimage):
+        #     """Convert opencv image to QPixmap"""
+        #     print("cv_to_pixmap")
+        #     h, w, ch = cvimage.shape # get shape of image
+        #     bytes_per_line = ch * w
+        #     convert_to_Qt_format = QImage(cvimage, w, h, bytes_per_line, QImage.Format_RGB888)
+        #     return convert_to_Qt_format
 
 
 #endregion VIDEO THREAD

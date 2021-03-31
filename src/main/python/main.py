@@ -1,8 +1,8 @@
 import sys
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtCore import QSize, Qt, pyqtSignal, QThreadPool
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtCore import QSize, Qt, pyqtSignal, QThreadPool, pyqtSlot
+from PyQt5.QtGui import QPixmap, QIcon, QImage
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy
 )
+import numpy as np
 sys.path.append("/home/liam/Project/payment-system/")
 
 # import ui files
@@ -37,8 +38,6 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         self.setSizePolicy(sizePolicy)
         self.setGeometry(0, 0,gv.WIDTH, gv.HEIGHT)
         self.setMaximumSize(QSize(gv.WIDTH, gv.HEIGHT))
-        # self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
-        
         ###################################################################################
         #region MainWindow SETUP                                                          
 
@@ -55,19 +54,47 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         #endregion MainWindow SETUP                                                           
         ###################################################################################
         
-
         #######################################################################
         #region PAGE ONE CONFIG
-        feedthread = QThreadPool()
-        feedWorker = FeedWorker()
-        feedthread.start(feedWorker)
-        feedWorker.signals.frame.connect(lambda img: print(img))
+
+        # define Slot for update image
+        @pyqtSlot()
+        def update_image(cv_image):
+            qt_img = convert_cv_to_qt(cv_image)
+            self.page1.feed.setPixmap(qt_img)
+
+        def convert_cv_to_qt(img):
+            h, w, ch = img.shape
+            bytes_per_line = ch * w
+            convert_cv_to_Qt_format = QImage(img.data, w, h, QImage.Format_RGB888)
+            p = convert_cv_to_Qt_format.scaled(gv.FeedWidth, gv.FeedHeight, Qt.KeepAspectRatio)
+            return QPixmap.fromImage(p)
+        
+        self.feed_img = None
+        self.feedthread = QThreadPool()
+        print(self.feedthread.maxThreadCount())
+        self.feedWorker = FeedWorker()
+        self.feedWorker.signals.cv_image.connect(update_image)
+        self.feedthread.start(self.feedWorker)
+
+        # @pyqtSlot()
+        # def update_image(cv_image):
+        #     qt_img = convert_cv_to_qt(cv_image)
+        #     print("update")
+        #     self.page1.feed.setPixmap(qt_img)
+
+        # def convert_cv_to_qt(img):
+        #     h, w, ch = img.shape
+        #     bytes_per_line = ch * w
+        #     convert_cv_to_Qt_format = QImage(img.data, w, h, QImage.Format_RGB888)
+        #     p = convert_cv_to_Qt_format.scaled(gv.FeedWidth, gv.FeedHeight, Qt.KeepAspectRatio)
+        #     return QPixmap.fromImage(p)
         #endregion PAGE ON CONFIG
         ########################################################################
-
 
 if __name__ == '__main__':
     window = MainWindow()
     window.show()
     exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
     sys.exit(exit_code)
+# self.show()
