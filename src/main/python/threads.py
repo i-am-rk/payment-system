@@ -54,7 +54,7 @@ class FeedWorker(QRunnable):
         #     print(n)
         # print("inside worker run")
         try:
-            while True:
+            while gv.VideoFeedStatus:
                 ret, frame = cap.read()
                 rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
                 self.signals.cv_image.emit(rgb_img)

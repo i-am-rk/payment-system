@@ -56,7 +56,6 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         
         #######################################################################
         #region PAGE ONE CONFIG
-
         # define Slot for update image
         @pyqtSlot()
         def update_image(cv_image):
@@ -70,28 +69,17 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
             p = convert_cv_to_Qt_format.scaled(gv.FeedWidth, gv.FeedHeight, Qt.KeepAspectRatio)
             return QPixmap.fromImage(p)
         
-        self.feed_img = None
         self.feedthread = QThreadPool()
-        print(self.feedthread.maxThreadCount())
         self.feedWorker = FeedWorker()
         self.feedWorker.signals.cv_image.connect(update_image)
         self.feedthread.start(self.feedWorker)
-
-        # @pyqtSlot()
-        # def update_image(cv_image):
-        #     qt_img = convert_cv_to_qt(cv_image)
-        #     print("update")
-        #     self.page1.feed.setPixmap(qt_img)
-
-        # def convert_cv_to_qt(img):
-        #     h, w, ch = img.shape
-        #     bytes_per_line = ch * w
-        #     convert_cv_to_Qt_format = QImage(img.data, w, h, QImage.Format_RGB888)
-        #     p = convert_cv_to_Qt_format.scaled(gv.FeedWidth, gv.FeedHeight, Qt.KeepAspectRatio)
-        #     return QPixmap.fromImage(p)
         #endregion PAGE ON CONFIG
         ########################################################################
 
+    def closeEvent(self, event):
+        print(event)
+        gv.VideoFeedStatus = False
+        event.accept()
 if __name__ == '__main__':
     window = MainWindow()
     window.show()

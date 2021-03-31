@@ -3,3 +3,5 @@ HEIGHT = 550 # window height
 
 FeedWidth = 420 # Feed Width
 FeedHeight = 320 # Feed width
+
+VideoFeedStatus = True
