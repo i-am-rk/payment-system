@@ -1,7 +1,7 @@
 import sys
 
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtCore import QSize, Qt, pyqtSignal
+from PyQt5.QtCore import QSize, Qt, pyqtSignal, QThreadPool
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import (
     QApplication,
@@ -24,6 +24,8 @@ from UI.Pages import page1
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
+
+from threads import FeedWorker
 
 # Main Window
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
@@ -53,6 +55,15 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         #endregion MainWindow SETUP                                                           
         ###################################################################################
         
+
+        #######################################################################
+        #region PAGE ONE CONFIG
+        feedthread = QThreadPool()
+        feedWorker = FeedWorker()
+        feedthread.start(feedWorker)
+        feedWorker.signals.frame.connect(lambda img: print(img))
+        #endregion PAGE ON CONFIG
+        ########################################################################
 
 
 if __name__ == '__main__':
