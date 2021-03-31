@@ -9,7 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from pathlib import Path
+import json
 
 # class Ui_Page(object):
 class Ui_Page(QtWidgets.QWidget):
@@ -21,15 +22,26 @@ class Ui_Page(QtWidgets.QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Page.sizePolicy().hasHeightForWidth())
         Page.setSizePolicy(sizePolicy)
+
+        
+
+
         self.horizontalLayout = QtWidgets.QHBoxLayout(Page)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
+        
+        ##################################################################
+        #region FEED BLOCK
         self.feed_side = QtWidgets.QFrame(Page)
+
+        # sizePolicy for feed_side
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.feed_side.sizePolicy().hasHeightForWidth())
+
+        # set feed_side geometry
         self.feed_side.setSizePolicy(sizePolicy)
         self.feed_side.setMinimumSize(QtCore.QSize(0, 0))
         self.feed_side.setMaximumSize(QtCore.QSize(460, 16777215))
@@ -38,12 +50,16 @@ class Ui_Page(QtWidgets.QWidget):
         self.feed_side.setFrameShadow(QtWidgets.QFrame.Plain)
         self.feed_side.setLineWidth(0)
         self.feed_side.setObjectName("feed_side")
+
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.feed_side)
         self.verticalLayout_2.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
+        #####################################################################
+        #region VIDEO BLOCK
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
@@ -64,7 +80,12 @@ class Ui_Page(QtWidgets.QWidget):
         self.horizontalLayout_3.addWidget(self.label)
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem2)
-        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        #endregion VIDEO BLOCK
+        ###########################################################################
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)# adds video section to layout
+        
+        ################################################################################3
+        #region FEED BUTTONS REGION
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(-1, 15, -1, -1)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
@@ -101,9 +122,16 @@ class Ui_Page(QtWidgets.QWidget):
         spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem4)
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+        #endregion FEED BUTTONS REGION
+        ###########################################################################3
         spacerItem5 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem5)
-        self.horizontalLayout.addWidget(self.feed_side)
+        #endregion FEED BLOCK
+        #######################################################################
+        self.horizontalLayout.addWidget(self.feed_side) # add feed side to layout
+
+        ##########################################################################
+        #region DETAILS BLOCK
         self.details_side = QtWidgets.QFrame(Page)
         self.details_side.setMinimumSize(QtCore.QSize(0, 0))
         self.details_side.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -126,11 +154,11 @@ class Ui_Page(QtWidgets.QWidget):
         self.gridLayout.setHorizontalSpacing(6)
         self.gridLayout.setVerticalSpacing(10)
         self.gridLayout.setObjectName("gridLayout")
-        self.label_10 = QtWidgets.QLabel(self.frame)
-        self.label_10.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_10.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_10.setObjectName("label_10")
-        self.gridLayout.addWidget(self.label_10, 2, 1, 1, 1)
+        self.num_plate_label = QtWidgets.QLabel(self.frame)
+        self.num_plate_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.num_plate_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.num_plate_label.setObjectName("num_plate_label")
+        self.gridLayout.addWidget(self.num_plate_label, 2, 1, 1, 1)
         self.label_26 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -147,11 +175,11 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_24.setFont(font)
         self.label_24.setObjectName("label_24")
         self.gridLayout.addWidget(self.label_24, 3, 0, 1, 1)
-        self.label_13 = QtWidgets.QLabel(self.frame)
-        self.label_13.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_13.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_13.setObjectName("label_13")
-        self.gridLayout.addWidget(self.label_13, 7, 1, 1, 1)
+        self.exit_time_label = QtWidgets.QLabel(self.frame)
+        self.exit_time_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.exit_time_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.exit_time_label.setObjectName("exit_time_label")
+        self.gridLayout.addWidget(self.exit_time_label, 7, 1, 1, 1)
         self.label_28 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -160,21 +188,21 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_28.setFont(font)
         self.label_28.setObjectName("label_28")
         self.gridLayout.addWidget(self.label_28, 7, 0, 1, 1)
-        self.label_11 = QtWidgets.QLabel(self.frame)
-        self.label_11.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_11.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_11.setObjectName("label_11")
-        self.gridLayout.addWidget(self.label_11, 5, 1, 1, 1)
-        self.label_12 = QtWidgets.QLabel(self.frame)
-        self.label_12.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_12.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_12.setObjectName("label_12")
-        self.gridLayout.addWidget(self.label_12, 4, 1, 1, 1)
-        self.label_8 = QtWidgets.QLabel(self.frame)
-        self.label_8.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_8.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_8.setObjectName("label_8")
-        self.gridLayout.addWidget(self.label_8, 1, 1, 1, 1)
+        self.entry_time_label = QtWidgets.QLabel(self.frame)
+        self.entry_time_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.entry_time_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.entry_time_label.setObjectName("entry_time_label")
+        self.gridLayout.addWidget(self.entry_time_label, 5, 1, 1, 1)
+        self.entry_date_label = QtWidgets.QLabel(self.frame)
+        self.entry_date_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.entry_date_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.entry_date_label.setObjectName("entry_date_label")
+        self.gridLayout.addWidget(self.entry_date_label, 4, 1, 1, 1)
+        self.type_label = QtWidgets.QLabel(self.frame)
+        self.type_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.type_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.type_label.setObjectName("type_label")
+        self.gridLayout.addWidget(self.type_label, 1, 1, 1, 1)
         self.label_27 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -183,16 +211,16 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_27.setFont(font)
         self.label_27.setObjectName("label_27")
         self.gridLayout.addWidget(self.label_27, 6, 0, 1, 1)
-        self.label_9 = QtWidgets.QLabel(self.frame)
-        self.label_9.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_9.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_9.setObjectName("label_9")
-        self.gridLayout.addWidget(self.label_9, 3, 1, 1, 1)
-        self.label_7 = QtWidgets.QLabel(self.frame)
-        self.label_7.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_7.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout.addWidget(self.label_7, 0, 1, 1, 1)
+        self.name_label = QtWidgets.QLabel(self.frame)
+        self.name_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.name_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.name_label.setObjectName("name_label")
+        self.gridLayout.addWidget(self.name_label, 3, 1, 1, 1)
+        self.id_label = QtWidgets.QLabel(self.frame)
+        self.id_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.id_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.id_label.setObjectName("id_label")
+        self.gridLayout.addWidget(self.id_label, 0, 1, 1, 1)
         self.label_25 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -225,11 +253,11 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_21.setFont(font)
         self.label_21.setObjectName("label_21")
         self.gridLayout.addWidget(self.label_21, 0, 0, 1, 1)
-        self.label_14 = QtWidgets.QLabel(self.frame)
-        self.label_14.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_14.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_14.setObjectName("label_14")
-        self.gridLayout.addWidget(self.label_14, 6, 1, 1, 1)
+        self.exit_date_label = QtWidgets.QLabel(self.frame)
+        self.exit_date_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.exit_date_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.exit_date_label.setObjectName("exit_date_label")
+        self.gridLayout.addWidget(self.exit_date_label, 6, 1, 1, 1)
         self.label_22 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setPointSize(11)
@@ -238,11 +266,11 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_22.setFont(font)
         self.label_22.setObjectName("label_22")
         self.gridLayout.addWidget(self.label_22, 1, 0, 1, 1)
-        self.label_15 = QtWidgets.QLabel(self.frame)
-        self.label_15.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
-        self.label_15.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
-        self.label_15.setObjectName("label_15")
-        self.gridLayout.addWidget(self.label_15, 8, 1, 1, 1)
+        self.charges_label = QtWidgets.QLabel(self.frame)
+        self.charges_label.setCursor(QtGui.QCursor(QtCore.Qt.IBeamCursor))
+        self.charges_label.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse|QtCore.Qt.TextSelectableByMouse)
+        self.charges_label.setObjectName("charges_label")
+        self.gridLayout.addWidget(self.charges_label, 8, 1, 1, 1)
         self.details_container.addWidget(self.frame)
         spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.details_container.addItem(spacerItem8)
@@ -255,51 +283,71 @@ class Ui_Page(QtWidgets.QWidget):
         self.verticalLayout_3.setStretch(0, 1)
         self.verticalLayout_3.setStretch(1, 6)
         self.verticalLayout_3.setStretch(2, 4)
-        self.horizontalLayout.addWidget(self.details_side)
+        #endregion DETAILS BLOCK
+        ##########################################################################
+        self.horizontalLayout.addWidget(self.details_side) # add details side to layout
 
         self.retranslateUi(Page)
         QtCore.QMetaObject.connectSlotsByName(Page)
+        
 
+        #####################################################################
+        #region STYLE SHEET CONFIG
+        # set style sheet
+        p = Path(__file__).parent
+        qss = (p / "../Styles/page1_style.qss").resolve()
+        style_vars = (p / "../Styles/style_vars.json").resolve()
+        if style_vars.is_file():  # load colors
+            with open(style_vars, "r") as c:
+                style_vars = json.load(c)
+            if qss.is_file():
+                with open(qss, "r") as qss:
+                    qss = qss.read()
+                self.setStyleSheet(qss.format(**style_vars))
+        #endregion STYLE SHEET CONFIG
+        #########################################################################
+        print(self.styleSheet())
+        
     def retranslateUi(self, Page):
         _translate = QtCore.QCoreApplication.translate
         Page.setWindowTitle(_translate("Page", "Form"))
         self.cam_scan_btn.setText(_translate("Page", "Scan"))
         self.manual_entry_btn.setText(_translate("Page", "Manual"))
-        self.label_10.setText(_translate("Page", "------------------------"))
-        self.label_10.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.num_plate_label.setText(_translate("Page", "------------------------"))
+        self.num_plate_label.setProperty("class", _translate("Page", "details_holder"))
         self.label_26.setText(_translate("Page", "Entry Time: "))
-        self.label_26.setProperty("cssClass", _translate("Page", "details_label"))
+        self.label_26.setProperty("class", _translate("Page", "details_label"))
         self.label_24.setText(_translate("Page", "Name: "))
-        self.label_24.setProperty("cssClass", _translate("Page", "details_label"))
-        self.label_13.setText(_translate("Page", "-----------------------"))
-        self.label_13.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.label_24.setProperty("class", _translate("Page", "details_label"))
+        self.exit_time_label.setText(_translate("Page", "-----------------------"))
+        self.exit_time_label.setProperty("class", _translate("Page", "details_holder"))
         self.label_28.setText(_translate("Page", "Exit Time: "))
-        self.label_28.setProperty("cssClass", _translate("Page", "details_label"))
-        self.label_11.setText(_translate("Page", "----------------------"))
-        self.label_11.setProperty("cssClass", _translate("Page", "details_holder"))
-        self.label_12.setText(_translate("Page", "----------------------"))
-        self.label_12.setProperty("cssClass", _translate("Page", "details_holder"))
-        self.label_8.setText(_translate("Page", "------------------------"))
-        self.label_8.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.label_28.setProperty("class", _translate("Page", "details_label"))
+        self.entry_time_label.setText(_translate("Page", "----------------------"))
+        self.entry_time_label.setProperty("class", _translate("Page", "details_holder"))
+        self.entry_date_label.setText(_translate("Page", "----------------------"))
+        self.entry_date_label.setProperty("class", _translate("Page", "details_holder"))
+        self.type_label.setText(_translate("Page", "------------------------"))
+        self.type_label.setProperty("class", _translate("Page", "details_holder"))
         self.label_27.setText(_translate("Page", "Exit Date: "))
-        self.label_27.setProperty("cssClass", _translate("Page", "details_label"))
-        self.label_9.setText(_translate("Page", "-----------------------"))
-        self.label_9.setProperty("cssClass", _translate("Page", "details_holder"))
-        self.label_7.setText(_translate("Page", "-------------------------"))
-        self.label_7.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.label_27.setProperty("class", _translate("Page", "details_label"))
+        self.name_label.setText(_translate("Page", "-----------------------"))
+        self.name_label.setProperty("class", _translate("Page", "details_holder"))
+        self.id_label.setText(_translate("Page", "-------------------------"))
+        self.id_label.setProperty("class", _translate("Page", "details_holder"))
         self.label_25.setText(_translate("Page", "Entry Date: "))
-        self.label_25.setProperty("cssClass", _translate("Page", "details_label"))
+        self.label_25.setProperty("class", _translate("Page", "details_label"))
         self.label_23.setText(_translate("Page", "Number Plate: "))
-        self.label_23.setProperty("cssClass", _translate("Page", "details_label"))
+        self.label_23.setProperty("class", _translate("Page", "details_label"))
         self.label_29.setText(_translate("Page", "Charges: "))
-        self.label_29.setProperty("cssClass", _translate("Page", "details_label"))
+        self.label_29.setProperty("class", _translate("Page", "details_label"))
         self.label_21.setText(_translate("Page", "Id: "))
-        self.label_21.setProperty("cssClass", _translate("Page", "details_label"))
-        self.label_14.setText(_translate("Page", "-----------------------"))
-        self.label_14.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.label_21.setProperty("class", _translate("Page", "details_label"))
+        self.exit_date_label.setText(_translate("Page", "-----------------------"))
+        self.exit_date_label.setProperty("class", _translate("Page", "details_holder"))
         self.label_22.setText(_translate("Page", "Type: "))
-        self.label_22.setProperty("cssClass", _translate("Page", "details_label"))
-        self.label_15.setText(_translate("Page", "------------------------"))
-        self.label_15.setProperty("cssClass", _translate("Page", "details_holder"))
+        self.label_22.setProperty("class", _translate("Page", "details_label"))
+        self.charges_label.setText(_translate("Page", "------------------------"))
+        self.charges_label.setProperty("class", _translate("Page", "details_holder"))
 # import resource_rc 
 from UI import resource_rc
