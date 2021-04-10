@@ -19,7 +19,7 @@ cap = cv.VideoCapture(0)
 # define signals class
 class FeedSignals(QObject):
     """
-    Defines signals available while using camera feed thread.
+    Defines signals available while using camera feed thread..
     Signals:
         `frame` emits current frame of feed
     """
@@ -55,3 +55,4 @@ class FeedWorker(QRunnable):
             self.signals.error.emit(str(e))
 #endregion VIDEO THREAD
 ######################################################################
+

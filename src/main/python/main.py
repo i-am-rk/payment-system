@@ -56,7 +56,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         
         #######################################################################
         #region PAGE ONE CONFIG
-        # define Slot for update image
+        # define Slot for update image.
         @pyqtSlot()
         def update_image(cv_image):
             qt_img = convert_cv_to_qt(cv_image)
@@ -76,6 +76,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         #endregion PAGE ON CONFIG
         ########################################################################
 
+        
     def closeEvent(self, event):
         print(event)
         gv.VideoFeedStatus = False

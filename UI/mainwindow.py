@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from UI import styles
 from UI.Pages import page1
+from UI.Pages import page2
 
 class Ui_MainWindow(object):
         def __init__(self):
@@ -197,12 +198,8 @@ class Ui_MainWindow(object):
                 self.Pages.addWidget(self.page1)
 
                 # Page Two
-                self.page2 = QtWidgets.QWidget()
-                self.page2.setObjectName("page_2")
-                self.label_4 = QtWidgets.QLabel(self.page2)
-                self.label_4.setGeometry(QtCore.QRect(360, 220, 141, 51))
-                self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-                self.label_4.setObjectName("label_4")
+                self.page2 = page2.Ui_Page()
+                self.page2 = setupUi(self.page2)
                 self.Pages.addWidget(self.page2)
 
                 # Page Three
