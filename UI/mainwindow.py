@@ -10,8 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from UI import styles
-from UI.Pages import page1
-from UI.Pages import page2
+from UI.Pages import page1, page2, page3
+# from UI.Pages import page2
 
 class Ui_MainWindow(object):
         def __init__(self):
@@ -199,16 +199,12 @@ class Ui_MainWindow(object):
 
                 # Page Two
                 self.page2 = page2.Ui_Page()
-                self.page2 = setupUi(self.page2)
+                self.page2.setupUi(self.page2)
                 self.Pages.addWidget(self.page2)
 
                 # Page Three
-                self.page3 = QtWidgets.QWidget()
-                self.page3.setObjectName("page_3")
-                self.label_6 = QtWidgets.QLabel(self.page3)
-                self.label_6.setGeometry(QtCore.QRect(360, 220, 141, 51))
-                self.label_6.setAlignment(QtCore.Qt.AlignCenter)
-                self.label_6.setObjectName("label_6")
+                self.page3 = page3.Ui_Page()
+                self.page3.setupUi(self.page3)
                 self.Pages.addWidget(self.page3)
 
                 # Page Four
@@ -257,8 +253,8 @@ class Ui_MainWindow(object):
                 self.add_btn.setText(_translate("MainWindow", "Add Customer"))
 
                 # self.label_5.setText(_translate("MainWindow", "Page one"))
-                self.label_4.setText(_translate("MainWindow", "Page Two"))
-                self.label_6.setText(_translate("MainWindow", "Page Three"))
+                # self.label_4.setText(_translate("MainWindow", "Page Two"))
+                # self.label_6.setText(_translate("MainWindow", "Page Three"))
                 self.label_7.setText(_translate("MainWindow", "Page Four"))
                 self.label_8.setText(_translate("MainWindow", "Page Five"))
 # import resource_rc 

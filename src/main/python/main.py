@@ -12,8 +12,8 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSizePolicy
 )
-import numpy as np
-sys.path.append("/home/liam/Project/payment-system/")
+# import numpy as np
+sys.path.append("/home/liam/Programming/Project/payment-system/")
 
 # import ui files
 from UI import mainwindow
@@ -30,7 +30,7 @@ from threads import FeedWorker
 
 # Main Window
 class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
-    def __init__(self, *args, obj=None, **Kwargs):
+    def __init__(self, *args, obj = None, **Kwargs):
         super(MainWindow, self).__init__(*args, **Kwargs)
         self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.WindowMinimizeButtonHint)
         self.setupUi(self)

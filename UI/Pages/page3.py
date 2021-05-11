@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Form implementation generated from reading ui file 'UI/Pages/page1.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
