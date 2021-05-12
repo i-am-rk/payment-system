@@ -1,31 +1,16 @@
 from PyQt5.QtCore import(
     QPropertyAnimation
 )
-# from UI import mainwindow as mw
 
-# class UI_Functions(mw.Ui_MainWindow):
-#     """
-#     This class holds all ui functions
-#     Function:
-#         `toggle menu`
-#         `change_page`
-#     """
-#     # FUNCTION:Toggle Menu
-#     def toggle_menu(self):
-#         print("Toggle menu")
-#         print(self.menu_toggle_btn)
-
-#     # FUNCTION:Change Page
-#     def change_page(self):
-#         pass
-#         # SUBF:change button state
 ############################################
-### Variables
+#region Variables
 GLOBAL_SIDE_PANEL_LENTH = 160
+#endregion Variables
 ############################################
 
 
-
+########################################################################
+#region Toggle Menu
 #FUNCTION:Toggle Menu
 def toggle_menu(self, status):
     if status:
@@ -58,7 +43,11 @@ def toggle_menu(self, status):
         
         self.anim1.start()
         self.anim2.start()
+#endregion Toggle Menu
+########################################################################
 
+####################################################################
+#region Change Page
 # FUNCTION:Change Page
 def change_page(self, idx, status):
     menus = [
@@ -75,6 +64,8 @@ def change_page(self, idx, status):
         else:
             buttonNotActive(menus[i])
     # SUBF:change button state
+#endregion Change Page
+########################################################################
 
 def buttonActive(btn):
     style = btn.styleSheet()
