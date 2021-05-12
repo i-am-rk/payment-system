@@ -67,20 +67,34 @@ def change_page(self, idx, status):
 #endregion Change Page
 ########################################################################
 
+###########################################################
+#region Button Active
 def buttonActive(btn):
     style = btn.styleSheet()
     style = style + ("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}")
     btn.setStyleSheet(style)
     btn.setChecked(True)
     btn.setEnabled(False)
+#endregion Button Active
+###########################################################
 
 
+###########################################################
+#region Button Not Active
 def buttonNotActive(btn):
     style = btn.styleSheet()
     style = style.replace("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}","")
     btn.setStyleSheet(style)
     btn.setChecked(False)
     btn.setEnabled(True)
+#endregion Button Not Active
+###########################################################
 
-from UI import resource_rc
 
+
+#######################################################
+#region Load Style Sheet
+def Load_style_sheet():
+    pass
+#endregion Load Style Sheet
+############################################################
