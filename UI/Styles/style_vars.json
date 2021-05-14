@@ -2,5 +2,7 @@
     "THEME_COLOR":"#00F506",
     "HOVER_COLOR": "#FFFFFF",
     "HOVER_BG_COLOR": "#1FB141",
-    "PRESSED_BG_COLOR": "#1FB141"
+    "PRESSED_BG_COLOR": "#1FB141",
+    "MENU_BTN_PADDING": "45px",
+    "MENU_BTN_BORDER": "8px"
 }

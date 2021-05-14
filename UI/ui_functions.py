@@ -1,7 +1,9 @@
+from os import PRIO_PGRP
 from PyQt5.QtCore import(
     QPropertyAnimation
 )
-
+from pathlib import Path, WindowsPath
+import json
 ############################################
 #region Variables
 GLOBAL_SIDE_PANEL_LENTH = 160
@@ -70,9 +72,6 @@ def change_page(self, idx, status):
 ###########################################################
 #region Button Active
 def buttonActive(btn):
-    style = btn.styleSheet()
-    style = style + ("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}")
-    btn.setStyleSheet(style)
     btn.setChecked(True)
     btn.setEnabled(False)
 #endregion Button Active
@@ -82,9 +81,6 @@ def buttonActive(btn):
 ###########################################################
 #region Button Not Active
 def buttonNotActive(btn):
-    style = btn.styleSheet()
-    style = style.replace("QPushButton{background-color:#00F506;border-left:8px solid #00F506; color:#000000;}","")
-    btn.setStyleSheet(style)
     btn.setChecked(False)
     btn.setEnabled(True)
 #endregion Button Not Active
@@ -95,6 +91,22 @@ def buttonNotActive(btn):
 #######################################################
 #region Load Style Sheet
 def Load_style_sheet():
-    pass
+    '''Returns style sheet after formating it using variables from json file
+    '''
+    p = Path(__file__).parent
+    qss = (p / "Styles/styles.qss").resolve()
+    style_vars = (p / "Styles/style_vars.json").resolve()
+
+    if style_vars.is_file(): # load colors
+        with open(style_vars, "r") as colors:
+            style_vars = json.load(colors)
+        if qss.is_file(): # load qss
+            with open(qss, "r") as qss:
+                qss = qss.read()
+            qss = qss.format(**style_vars)
+    if len(qss) > 0:
+        return qss
+    else:
+        print("No style in style sheet")
 #endregion Load Style Sheet
 ############################################################

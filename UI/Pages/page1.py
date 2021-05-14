@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pathlib import Path
 import json
+from UI import ui_functions as uif
 
 # class Ui_Page(object):
 class Ui_Page(QtWidgets.QWidget):
@@ -293,20 +294,11 @@ class Ui_Page(QtWidgets.QWidget):
 
         #####################################################################
         #region STYLE SHEET CONFIG
-        # set style sheet
-        p = Path(__file__).parent
-        qss = (p / "../Styles/page1_style.qss").resolve()
-        style_vars = (p / "../Styles/style_vars.json").resolve()
-        if style_vars.is_file():  # load colors
-            with open(style_vars, "r") as c:
-                style_vars = json.load(c)
-            if qss.is_file():
-                with open(qss, "r") as qss:
-                    qss = qss.read()
-                self.setStyleSheet(qss.format(**style_vars))
+        style = uif.Load_style_sheet()
+        self.setStyleSheet(style)
         #endregion STYLE SHEET CONFIG
         #########################################################################
-        # print(self.styleSheet())
+
         
     def retranslateUi(self, Page):
         _translate = QtCore.QCoreApplication.translate

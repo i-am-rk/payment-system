@@ -1,0 +1,60 @@
+
+QWidget#centralwidget {{
+    background-color: rgb(255, 255, 255);
+}}
+
+QPushButton#menu_toggle_btn {{
+    background-color:{THEME_COLOR};
+    border:none;
+    background-repeat:no-repeat;
+    background-position:center;
+}}
+QPushButton#menu_toggle_btn:hover {{
+    background-color:{HOVER_BG_COLOR};
+    border:none;
+    background-repeat:no-repeat;
+    background-position:center;
+}}
+
+
+
+QFrame#menus QPushButton {{
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color:none;
+    text-align: left;
+    padding-left: {MENU_BTN_PADDING};
+    border:none;
+    border-left: {MENU_BTN_BORDER} solid none;
+}}
+
+QFrame#menus QPushButton:checked {{
+    background-color: {THEME_COLOR};
+    border-left:{MENU_BTN_BORDER} solid {THEME_COLOR};
+}}
+QFrame#menus QPushButton:!checked {{
+    background-color:none;
+    border-left-width:{MENU_BTN_BORDER};
+    border-left-color: none;
+}}
+QFrame#menus QPushButton:hover {{
+    background-color: {HOVER_BG_COLOR};
+    border-left:{MENU_BTN_BORDER} solid {HOVER_BG_COLOR};
+    color:{HOVER_COLOR};
+}}
+
+
+
+QPushButton#cam_scan_btn:hover, 
+QPushButton#manual_entry_btn:hover {{
+    background-color: {THEME_COLOR};
+    border:none;
+    color:none;
+}}
+QPushButton#cam_scan_btn:pressed, 
+QPushButton#manual_entry_btn:pressed {{
+    background-color: {PRESSED_BG_COLOR};
+    border:none;
+    color:white;
+}}
+
