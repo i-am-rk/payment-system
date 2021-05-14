@@ -299,7 +299,8 @@ class Ui_Page(QtWidgets.QWidget):
         #endregion STYLE SHEET CONFIG
         #########################################################################
 
-        
+    ######################################################################
+    #region RetranslateUI    
     def retranslateUi(self, Page):
         _translate = QtCore.QCoreApplication.translate
         Page.setWindowTitle(_translate("Page", "Form"))
@@ -341,5 +342,8 @@ class Ui_Page(QtWidgets.QWidget):
         self.label_22.setProperty("class", _translate("Page", "details_label"))
         self.charges_label.setText(_translate("Page", "------------------------"))
         self.charges_label.setProperty("class", _translate("Page", "details_holder"))
+    #endregion RetranslateUI
+    ####################################################################
+    
 # import resource_rc 
 from UI import resource_rc

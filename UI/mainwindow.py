@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from UI import styles, ui_functions
 from UI import ui_functions as uif
 from UI.Pages import page1, page2, page3
-# from UI.Pages import page2
+
 
 class Ui_MainWindow(object):
         def __init__(self):
@@ -27,7 +27,9 @@ class Ui_MainWindow(object):
                 self.verticalLayout.setContentsMargins(0, 0, 0, 0)
                 self.verticalLayout.setSpacing(0)
                 self.verticalLayout.setObjectName("verticalLayout")
-#------------------top-bar------------------
+
+                ######################################################################
+                #region TOP BAR
                 self.top_bar = QtWidgets.QFrame(self.centralwidget)
                 self.top_bar.setMinimumSize(QtCore.QSize(0, 50))
                 self.top_bar.setMaximumSize(QtCore.QSize(16777215, 50))
@@ -38,14 +40,14 @@ class Ui_MainWindow(object):
                 self.top_bar.setObjectName("top_bar")
                 self.top_bar.setStyleSheet("QFrame{background-color: #FFFFFF;}")
 
-# ------------------shadow settings start------------------------
+                # shadow settings
                 shadow = QtWidgets.QGraphicsDropShadowEffect()
                 shadow.setColor(QtGui.QColor(50, 50, 50))
                 shadow.setBlurRadius(10)
                 shadow.setXOffset(0)
                 shadow.setYOffset(2)
-# ----------------shadows settings end----------------------
                 self.top_bar.setGraphicsEffect(shadow)
+
                 self.horizontalLayout = QtWidgets.QHBoxLayout(self.top_bar)
                 self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
                 self.horizontalLayout.setSpacing(0)
@@ -96,7 +98,14 @@ class Ui_MainWindow(object):
                 self.frame.setLineWidth(0)
                 self.frame.setObjectName("frame")
                 self.horizontalLayout.addWidget(self.frame)
+                #endregion TOP BAR
+                ######################################################################
                 self.verticalLayout.addWidget(self.top_bar)
+
+
+
+                ######################################################################
+                #region Main Container
                 self.main_container = QtWidgets.QFrame(self.centralwidget)
                 self.main_container.setFrameShape(QtWidgets.QFrame.NoFrame)
                 self.main_container.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -107,6 +116,9 @@ class Ui_MainWindow(object):
                 self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
                 self.horizontalLayout_2.setSpacing(0)
                 self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+                ######################################################################
+                #region Menus
                 self.menus = QtWidgets.QFrame(self.main_container)
                 self.menus.setMinimumSize(QtCore.QSize(0, 0))
                 self.menus.setMaximumSize(QtCore.QSize(46, 16777215))
@@ -121,8 +133,8 @@ class Ui_MainWindow(object):
                 self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
                 self.verticalLayout_2.setSpacing(0)
                 self.verticalLayout_2.setObjectName("verticalLayout_2")
+
                 # home button style
-                menu_btn_style = styles.menu_btn + styles.menu_btn_hover + styles.menu_btn_pressed
                 self.home_btn = QtWidgets.QPushButton(self.menus)
                 self.home_btn.setMinimumSize(QtCore.QSize(0, 50))
                 self.home_btn.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -165,7 +177,13 @@ class Ui_MainWindow(object):
                 
                 spacerItem = QtWidgets.QSpacerItem(20, 299, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
                 self.verticalLayout_2.addItem(spacerItem)
+                #endregion Menus 
+                ######################################################################
                 self.horizontalLayout_2.addWidget(self.menus)
+
+
+                ######################################################################
+                #region Menu Divider
                 self.divider = QtWidgets.QFrame(self.main_container)
                 self.divider.setMinimumSize(QtCore.QSize(4, 0))
                 self.divider.setMaximumSize(QtCore.QSize(4, 16777215))
@@ -176,8 +194,13 @@ class Ui_MainWindow(object):
                 self.divider.setFrameShadow(QtWidgets.QFrame.Plain)
                 self.divider.setLineWidth(0)
                 self.divider.setObjectName("divider")
+                #endregion Menu Divider 
+                ######################################################################
                 self.horizontalLayout_2.addWidget(self.divider)
-# -----------------Pages setup-------------------
+
+
+                ######################################################################
+                #region Pages
                 self.Pages = QtWidgets.QStackedWidget(self.main_container)
                 self.Pages.setObjectName("Pages")
 
@@ -214,9 +237,14 @@ class Ui_MainWindow(object):
                 self.label_8.setAlignment(QtCore.Qt.AlignCenter)
                 self.label_8.setObjectName("label_6")
                 self.Pages.addWidget(self.page5)
-                
+                #endregion Pages
+                ######################################################################
                 self.horizontalLayout_2.addWidget(self.Pages)
+
+                #endregion Main Container
+                ######################################################################
                 self.verticalLayout.addWidget(self.main_container)
+
                 MainWindow.setCentralWidget(self.centralwidget)
 
                 self.retranslateUi(MainWindow)
@@ -244,7 +272,9 @@ class Ui_MainWindow(object):
                 "QPushButton{background-image: url(:/Icons/Icons/add.png);}")
                 #endregion Styles
                 ###################################################
-
+        
+        ######################################################################
+        #region RetranslateUI
         def retranslateUi(self, MainWindow):
                 _translate = QtCore.QCoreApplication.translate
                 MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -264,10 +294,9 @@ class Ui_MainWindow(object):
                 self.add_btn.setToolTip(_translate("MainWindow", "Add Customer"))
                 self.add_btn.setText(_translate("MainWindow", "Add Customer"))
 
-                # self.label_5.setText(_translate("MainWindow", "Page one"))
-                # self.label_4.setText(_translate("MainWindow", "Page Two"))
-                # self.label_6.setText(_translate("MainWindow", "Page Three"))
                 self.label_7.setText(_translate("MainWindow", "Page Four"))
                 self.label_8.setText(_translate("MainWindow", "Page Five"))
-# import resource_rc 
+        #endregion RetranslateUI 
+        ######################################################################
+
 from UI import resource_rc
