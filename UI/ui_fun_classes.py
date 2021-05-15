@@ -1,6 +1,8 @@
 from os import PRIO_PGRP
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import(
-    QPropertyAnimation
+    QPropertyAnimation,
+    Qt
 )
 from pathlib import Path, WindowsPath
 import json
@@ -9,6 +11,7 @@ import json
 GLOBAL_SIDE_PANEL_LENTH = 160
 #endregion Variables
 ############################################
+
 
 
 ########################################################################
@@ -110,3 +113,58 @@ def Load_style_sheet():
         print("No style in style sheet")
 #endregion Load Style Sheet
 ############################################################
+
+
+
+#################### CLASSES ###########################
+
+########################################################
+#region Custom Sql TableWidget
+
+class MySqlQTableWidget(QtWidgets.QTableWidget):
+    '''This a Custom QTableWidget, which imports QTableWidget.
+    It is Used to show queried data from database.
+    
+    @cols: `Number of columns in query`
+    @labels: `list of labels for table`
+    @parent: `parent of widget`
+    '''
+    def __init__(self,cols=None,labels=None,parent=None):
+        super().__init__(parent)
+        self.setColumnCount(cols)
+        self.setHorizontalHeaderLabels(labels)
+        
+        self.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.setProperty("showDropIndicator", False)
+        self.setDragDropOverwriteMode(False)
+        self.setAlternatingRowColors(True)
+
+        self.setSelectionMode(QtWidgets.QAbstractItemView.SingleSelection)
+        self.setSelectionBehavior(QtWidgets.QAbstractItemView.SelectRows)
+        self.setVerticalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+        self.setHorizontalScrollMode(QtWidgets.QAbstractItemView.ScrollPerPixel)
+
+        self.horizontalHeader().setHighlightSections(True)
+        self.horizontalHeader().setStretchLastSection(True)
+        self.horizontalHeader().setDefaultSectionSize(150)
+        self.horizontalHeader().setMinimumSectionSize(80)
+        self.verticalHeader().setHighlightSections(True)
+        self.verticalHeader().setDefaultSectionSize(30)
+        
+
+
+    def show_data(self, query=None):
+        '''This method show queried data in table
+        @query: `queried data from database`
+        '''
+        while query.next():
+            row = self.rowCount()
+            self.setRowCount(row + 1)
+            for i in range(self.columnCount()):
+                item = QtWidgets.QTableWidgetItem(str(query.value(i)))
+                item.setTextAlignment(Qt.AlignCenter)
+                self.setItem(row, i, item)
+        self.resizeColumnsToContents()
+#endregion Custom Sql TableWidget
+######################################################################

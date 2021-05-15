@@ -3,6 +3,7 @@ import sys
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtCore import QSize, Qt, pyqtSignal, QThreadPool, pyqtSlot
 from PyQt5.QtGui import QPixmap, QIcon, QImage
+from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import (
     QApplication,
     QMainWindow,
@@ -17,11 +18,11 @@ sys.path.append("/home/liam/Programming/Project/payment-system/")
 
 # import ui files
 from UI import mainwindow
-# from UI.ui_functions import UI_Functions as uif
-from UI import ui_functions as uif
+from UI import ui_fun_classes as uif
+
+from custom import functions as cuf
 import globalvariables as gv 
 
-from UI.Pages import page1
 # 1. Instantiate ApplicationContext
 appctxt = ApplicationContext()       
 version = appctxt.build_settings["version"]
@@ -75,10 +76,29 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         self.feedthread.start(self.feedWorker)
         #endregion PAGE ON CONFIG
         ########################################################################
+        
+        ######################################################################
+        #region Page Two Config
+        page2 = self.page2
+        self.db = cuf.db_connect("QSQLITE", "pa_db.db")
+        self.db.open()
+        query = QSqlQuery("SELECT * FROM Client")
+        page2.db_table.show_data(query)
+        #endregion Page Two Config
+        ######################################################################
 
+        ######################################################################
+        #region Page Three Config
+        page3 = self.page3
+        query = QSqlQuery("SELECT * FROM Client")
+        page3.db_table.show_data(query)
+        #endregion Page Three Config
+        ######################################################################
+
+        self.db.close()
         
     def closeEvent(self, event):
-        print(event)
+        print(event, "Closing Window and Camera")
         gv.VideoFeedStatus = False
         event.accept()
 if __name__ == '__main__':

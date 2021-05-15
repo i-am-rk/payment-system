@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pathlib import Path
 import json
-from UI import ui_functions as uif
+from UI import ui_fun_classes as uif
 
 # class Ui_Page(object):
 class Ui_Page(QtWidgets.QWidget):

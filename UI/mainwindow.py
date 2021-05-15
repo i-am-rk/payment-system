@@ -10,8 +10,7 @@
 
 from os import set_inheritable
 from PyQt5 import QtCore, QtGui, QtWidgets
-from UI import styles, ui_functions
-from UI import ui_functions as uif
+from UI import ui_fun_classes as uif
 from UI.Pages import page1, page2, page3
 
 

@@ -10,6 +10,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
+from UI import ui_fun_classes as uif
 # class Ui_Page(object):
 class Ui_Page(QtWidgets.QWidget):
     def setupUi(self, Page):
@@ -59,14 +60,9 @@ class Ui_Page(QtWidgets.QWidget):
         self.frame_b_layout.setSpacing(0)
 
         # Set Tabel
-        self.db = self.db_connect('pa_db.db')
-        self.db.open()
-        self.db_table = Sql_table()
         db_labels = ["Id", "First Name", "Last Name", "Gender", "DOB", "Email", "Mob. Number", "Balance" ]
-        query = QSqlQuery("SELECT * FROM Client")
-        self.db_table.show_table(query, db_labels, 8)
+        self.db_table = uif.MySqlQTableWidget(cols=8, labels=db_labels)
         self.frame_b_layout.addWidget(self.db_table)
-        self.db.close()
 
         # table options buttons
         self.vl1 = QtWidgets.QVBoxLayout()
@@ -86,49 +82,6 @@ class Ui_Page(QtWidgets.QWidget):
         #endregion DATA TABLE
         ####################################################################
         self.vertical_layout.addWidget(self.frame_b)
-
-    def db_connect(self,databasename):
-        db = QSqlDatabase.addDatabase("QSQLITE")
-        db.setDatabaseName(databasename)
-        if not db.open():
-            Qtwidgets.QMessageBox.about(self, "DB Connection", "Error while connecting to Database.")
-            return 0
-        return db
-
-
-#######################################################
-#region Sql_table Class
-class Sql_table(QtWidgets.QTableWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-    
-    def show_table(self, query, table_labels, num_column):
-        '''
-        Function to show table
-        @query => data created from query
-        @num_column => number of column
-        @table_labels => table labels
-        '''
-
-        self.setColumnCount(num_column)
-        self.setHorizontalHeaderLabels(table_labels)
-        
-        while query.next():
-            row = self.rowCount()
-            self.setRowCount(row + 1)
-
-            self.setItem(row, 0, QtWidgets.QTableWidgetItem(str(query.value(0))))
-            self.setItem(row, 1, QtWidgets.QTableWidgetItem(query.value(1)))
-            self.setItem(row, 2, QtWidgets.QTableWidgetItem(query.value(2)))
-            self.setItem(row, 3, QtWidgets.QTableWidgetItem(query.value(3)))
-            self.setItem(row, 4, QtWidgets.QTableWidgetItem(query.value(4)))
-            self.setItem(row, 5, QtWidgets.QTableWidgetItem(query.value(5)))
-            self.setItem(row, 6, QtWidgets.QTableWidgetItem(query.value(6)))
-            self.setItem(row, 7, QtWidgets.QTableWidgetItem(str(query.value(7))))
-
-        self.resizeColumnsToContents()
-#endregion Sql_table Class
-###############################################################
 
 # import resource_rc 
 from UI import resource_rc
