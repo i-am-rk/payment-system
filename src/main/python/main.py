@@ -39,6 +39,11 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         self.setSizePolicy(sizePolicy)
         self.setGeometry(0, 0,gv.WIDTH, gv.HEIGHT)
         self.setMaximumSize(QSize(gv.WIDTH, gv.HEIGHT))
+
+        # Connect to database
+        self.db = cuf.db_connect("QSQLITE", "pa_db.db")
+        self.db.open()
+
         ###################################################################################
         #region MainWindow SETUP                                                          
 
@@ -80,8 +85,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         ######################################################################
         #region Page Two Config
         page2 = self.page2
-        self.db = cuf.db_connect("QSQLITE", "pa_db.db")
-        self.db.open()
+
         query = QSqlQuery("SELECT * FROM Client")
         page2.db_table.show_data(query)
         #endregion Page Two Config
@@ -95,12 +99,15 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         #endregion Page Three Config
         ######################################################################
 
+        # clos database connection
         self.db.close()
         
     def closeEvent(self, event):
         print(event, "Closing Window and Camera")
         gv.VideoFeedStatus = False
         event.accept()
+
+
 if __name__ == '__main__':
     window = MainWindow()
     window.show()
