@@ -1,6 +1,5 @@
 import sys
 
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtCore import QSize, Qt, pyqtSignal, QThreadPool, pyqtSlot
 from PyQt5.QtGui import QPixmap, QIcon, QImage
 from PyQt5.QtSql import QSqlQuery
@@ -14,7 +13,7 @@ from PyQt5.QtWidgets import (
     QSizePolicy
 )
 # import numpy as np
-sys.path.append("/home/liam/Programming/Project/payment-system/")
+sys.path.append("/home/liam/Programming/Projects/payment-system/")
 
 # import ui files
 from UI import mainwindow
@@ -22,10 +21,6 @@ from UI import ui_fun_classes as uif
 
 from custom import functions as cuf
 import globalvariables as gv 
-
-# 1. Instantiate ApplicationContext
-appctxt = ApplicationContext()       
-version = appctxt.build_settings["version"]
 
 from threads import FeedWorker
 
@@ -109,8 +104,7 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
 
 
 if __name__ == '__main__':
+    app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    exit_code = appctxt.app.exec_()      # 2. Invoke appctxt.app.exec_()
-    sys.exit(exit_code)
-# self.show()
+    sys.exit(app.exec_())
