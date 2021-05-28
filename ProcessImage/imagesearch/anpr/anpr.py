@@ -67,9 +67,6 @@ class PyImageSearchANPR:
 
             # check to see if the aspect ratio is reactangular
             if ar >= self.minAR and ar <= self.maxAR:
-                # store the license plate contour and extract the
-                # licenseplate from gray scale image and then
-                # threshold it
                 lpCnt = c
                 licensePlate = gray[y:y + h, x:x + w]
                 roi = cv.threshold(licensePlate, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)[1]
@@ -84,7 +81,7 @@ class PyImageSearchANPR:
                 # display the debugging information and then break
                 # from the loop early since we have found the license
                 #plate region
-                self.debug_imshow("Licese Plate", licensePlate, waitkey=True)
+                self.debug_imshow("Licese Plate", licensePlate)
                 self.debug_imshow("ROI", roi, waitkey=True)
                 break
         return (roi, lpCnt)
@@ -106,7 +103,7 @@ class PyImageSearchANPR:
 
     ###########################################################
     #region Find and OCR
-    def find_and_ocr(self, image, psm=7, clearBorder=False):
+    def find_and_ocr(self, image, psm=7, clearBorder=True):
         # initialize the license plate text
         lpText = None
         # convert the input image to grayscale, locate all candidate

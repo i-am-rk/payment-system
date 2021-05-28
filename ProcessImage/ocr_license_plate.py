@@ -50,7 +50,7 @@ def processLP(image,debug=True):
 ###############################################################
 
 def main(k):
-    image = cv.imread('ProcessImage/license_plates/Cars1.png')
+    image = cv.imread('ProcessImage/license_plates/Cars3.png')
     (text, image) = processLP(image)
     showImage(image)
 if __name__ == "__main__":
