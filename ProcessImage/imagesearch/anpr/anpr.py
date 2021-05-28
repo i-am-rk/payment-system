@@ -51,7 +51,7 @@ class PyImageSearchANPR:
     
     ###############################################################
     #region Locate LP
-    def locate_license_plate(self, gray, candidates, clearBorder=True):
+    def locate_license_plate(self, gray, candidates, clearBorder=False):
         '''Locate license plate from the list of contours of likely candidates
         '''
         # initialize the license plate contour and ROI
@@ -60,13 +60,16 @@ class PyImageSearchANPR:
 
         # loop over the license plate candidate contours
         for c in candidates:
+            peri = cv.arcLength(c, True)
+            approx = cv.approxPolyDP(c, 0.02 * peri, True)
+
             # compute the bonding box of the contour and the use
             # the bounding box to derive the aspect ratio
             (x, y, w, h) = cv.boundingRect(c)
             ar = w / float(h) # aspect ratio of bounding Rect
-
+            arTF = ar >= self.minAR and ar <= self.maxAR
             # check to see if the aspect ratio is reactangular
-            if ar >= self.minAR and ar <= self.maxAR:
+            if len(approx) == 4 or arTF:
                 lpCnt = c
                 licensePlate = gray[y:y + h, x:x + w]
                 roi = cv.threshold(licensePlate, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)[1]
@@ -88,6 +91,18 @@ class PyImageSearchANPR:
     #endregion Locate LP
     ###############################################################
 
+    #################################################################
+    #region Deskew ROI
+    def getSkewAngle(binaryImage):
+        '''Get Skew angle'''
+        # Dilate
+    def deskew_roi(roi):
+        '''Deskew ROI
+        '''
+        pass 
+    #endregion Deskew ROI   
+    ##############################################################
+
     ###############################################################
     #region Tesseract Option
     def build_tesseract_options(self, psm=7):
@@ -103,7 +118,7 @@ class PyImageSearchANPR:
 
     ###########################################################
     #region Find and OCR
-    def find_and_ocr(self, image, psm=7, clearBorder=True):
+    def find_and_ocr(self, image, psm=7, clearBorder=False):
         # initialize the license plate text
         lpText = None
         # convert the input image to grayscale, locate all candidate
