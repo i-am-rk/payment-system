@@ -23,7 +23,7 @@ def showImage(image):
     pil_img.show("Final")
 ############################################################3
 #region processLP
-def processLP(image,debug=False):
+def processLP(image,debug=True):
     anpr = PyImageSearchANPR(debug=debug)
     # image = imutils.resize(image, width=800)
 
