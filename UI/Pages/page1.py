@@ -9,9 +9,11 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QObject
 from pathlib import Path
 import json
 from UI import ui_fun_classes as uif
+
 
 # class Ui_Page(object):
 class Ui_Page(QtWidgets.QWidget):
@@ -130,7 +132,7 @@ class Ui_Page(QtWidgets.QWidget):
         #endregion FEED BLOCK
         #######################################################################
         self.horizontalLayout.addWidget(self.feed_side) # add feed side to layout
-
+        
         ##########################################################################
         #region DETAILS BLOCK
         self.details_side = QtWidgets.QFrame(Page)

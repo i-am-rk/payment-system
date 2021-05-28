@@ -18,6 +18,7 @@ sys.path.append("/home/liam/Programming/Projects/payment-system/")
 # import ui files
 from UI import mainwindow
 from UI import ui_fun_classes as uif
+from ProcessImage.ocr_license_plate import processLP
 
 from custom import functions as cuf
 import globalvariables as gv 
@@ -55,25 +56,35 @@ class MainWindow(QMainWindow, mainwindow.Ui_MainWindow):
         #endregion MainWindow SETUP                                                           
         ###################################################################################
         
+        # set Current
         #######################################################################
         #region PAGE ONE CONFIG
         # define Slot for update image.
+        Page1 = self.page1
+        currentFrame = None # store value of current frame for 
         @pyqtSlot()
-        def update_image(cv_image):
-            qt_img = convert_cv_to_qt(cv_image)
+        def processedImage(lpText, img):
+            qt_img = convert_cv_to_qt(img)
             self.page1.feed.setPixmap(qt_img)
-
+        
         def convert_cv_to_qt(img):
             h, w, ch = img.shape
             bytes_per_line = ch * w
             convert_cv_to_Qt_format = QImage(img.data, w, h, QImage.Format_RGB888)
+            currentFrame = img
             p = convert_cv_to_Qt_format.scaled(gv.FeedWidth, gv.FeedHeight, Qt.KeepAspectRatio)
             return QPixmap.fromImage(p)
-        
+
+        # function to emit requestFrame signl
+        def scanFrame():
+            # change global status of image process
+            gv.ProcessFrame = True
         self.feedthread = QThreadPool()
         self.feedWorker = FeedWorker()
-        self.feedWorker.signals.cv_image.connect(update_image)
+        self.feedWorker.signals.processedImage.connect(processedImage)
         self.feedthread.start(self.feedWorker)
+
+        Page1.cam_scan_btn.clicked.connect(scanFrame)
         #endregion PAGE ON CONFIG
         ########################################################################
         

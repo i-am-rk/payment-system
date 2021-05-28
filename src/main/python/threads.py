@@ -1,10 +1,12 @@
 
+import time
 import cv2 as cv 
 from PyQt5.QtCore import QRunnable, pyqtSignal, pyqtSlot, QObject, Qt
 from PyQt5.QtGui import QImage
-
+from UI.Pages import page1
 
 import globalvariables as gv
+from ProcessImage.ocr_license_plate import processLP
 
 
 
@@ -12,7 +14,8 @@ import globalvariables as gv
 #region VIDEO THREAD
 
 # initialize opencv video capture
-cap = cv.VideoCapture(0)
+url = 'http://192.168.43.1:8080/video'
+cap = cv.VideoCapture(url)
 # cap.set(3, gv.FeedWidth) # set width of video capture
 # cap.set(4, gv.FeedHeight)  # set height of video capture
 
@@ -23,7 +26,7 @@ class FeedSignals(QObject):
     Signals:
         `frame` emits current frame of feed
     """
-    cv_image = pyqtSignal(object)
+    processedImage = pyqtSignal(object, object)
     error = pyqtSignal(str)
     
 # define worker
@@ -50,9 +53,14 @@ class FeedWorker(QRunnable):
             while gv.VideoFeedStatus:
                 ret, frame = cap.read()
                 rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-                self.signals.cv_image.emit(rgb_img)
+                if gv.ProcessFrame: # process frame if variable is true
+                    (lpText, img) = processLP(frame, debug=True)
+                    gv.ProcessFrame = False
+                    self.signals.processedImage.emit(lpText, cv.cvtColor(img, cv.COLOR_BGR2RGB))
+                    time.sleep(3)
+                else:
+                    self.signals.processedImage.emit(None,rgb_img)
         except Exception as e:
             self.signals.error.emit(str(e))
 #endregion VIDEO THREAD
 ######################################################################
-
