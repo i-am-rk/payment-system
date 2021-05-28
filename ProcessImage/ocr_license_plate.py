@@ -1,5 +1,5 @@
-from imagesearch.anpr.anpr import PyImageSearchANPR
-# from ProcessImage.imagesearch.anpr.anpr import PyImageSearchANPR
+# from imagesearch.anpr.anpr import PyImageSearchANPR
+from ProcessImage.imagesearch.anpr.anpr import PyImageSearchANPR
 from imutils import paths
 from PIL import Image
 import argparse
@@ -12,10 +12,11 @@ import cv2 as cv
 
 
 
-def cleanup_text(text):
+def cleanup_text(text, debug=False):
     # strip out non-ASCII text so we can draw the text on the image
     # using opencv
-    print(text)
+    if debug:
+        print(text)
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
 def showImage(image):
@@ -41,7 +42,7 @@ def processLP(image,debug=True):
         # compute a normal(unrotated) bounding box for the license plate
         # and then draw the OCR'd license plate text on the image
         (x,y, w, h) = cv.boundingRect(lpCnt)
-        cv.putText(image, cleanup_text(lpText), (x, y -15), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
+        cv.putText(image, cleanup_text(lpText, debug=debug), (x, y -15), cv.FONT_HERSHEY_SIMPLEX, 0.75, (0, 255, 0), 2)
 
 
         # print output

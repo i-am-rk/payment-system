@@ -54,7 +54,7 @@ class FeedWorker(QRunnable):
                 ret, frame = cap.read()
                 rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
                 if gv.ProcessFrame: # process frame if variable is true
-                    (lpText, img) = processLP(frame, debug=True)
+                    (lpText, img) = processLP(frame, debug=False)
                     gv.ProcessFrame = False
                     self.signals.processedImage.emit(lpText, cv.cvtColor(img, cv.COLOR_BGR2RGB))
                     time.sleep(3)

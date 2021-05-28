@@ -1,4 +1,4 @@
-from os import terminal_size
+from os import WIFCONTINUED, terminal_size
 from numpy.lib.twodim_base import _tri_dispatcher
 from skimage.segmentation import clear_border
 import pytesseract
@@ -11,7 +11,7 @@ from PIL import Image
 class PyImageSearchANPR:
     '''Localises number plate and performs ocr
     '''
-    def __init__(self, minAR=3, maxAR=7, debug=False):
+    def __init__(self, minAR=2, maxAR=6, debug=False):
         # store the minimum and maximum rectangular aspect ratio.
         # values along with whether or not we are in debug mode.
         self.minAR = minAR
@@ -26,11 +26,11 @@ class PyImageSearchANPR:
             # cv.imshow(title, image)
             pil_img = Image.fromarray(cv.cvtColor(image, cv.COLOR_BGR2RGB))
             if waitkey:
-                pil_img.show(title="test")
+                pil_img.show(title=title)
 
     #####################################################################
     #region Locate LP Candidates            
-    def locate_license_plate_candidates(self, gray, keep=5):
+    def locate_license_plate_candidates(self, gray, keep=20):
         '''Locates License plate area candidates
         and returns list of likely contours containing license plates.
 
@@ -42,7 +42,7 @@ class PyImageSearchANPR:
 
         cnts = cv.findContours(edged.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
         cnts = imutils.grab_contours(cnts)
-        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:30]
+        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:keep]
 
         # return the list of countours
         return cnts
@@ -69,21 +69,22 @@ class PyImageSearchANPR:
             ar = w / float(h) # aspect ratio of bounding Rect
             arTF = ar >= self.minAR and ar <= self.maxAR
             # check to see if the aspect ratio is reactangular
-            if len(approx) == 4 or arTF:
+            if arTF and w > 180:
                 lpCnt = c
                 licensePlate = gray[y:y + h, x:x + w]
                 roi = cv.threshold(licensePlate, 0, 255, cv.THRESH_BINARY_INV | cv.THRESH_OTSU)[1]
 
+
                 # check to see if we should clear any forground
                 # pixels touching the border of the image
                 #(which typically, not but always, indicates noise)
-
+                # self.warp_lp(roi)
                 if clearBorder:
                     roi = clear_border(roi)
-
                 # display the debugging information and then break
                 # from the loop early since we have found the license
                 #plate region
+                print(cv.boundingRect(c), cv.contourArea(c))
                 self.debug_imshow("Licese Plate", licensePlate)
                 self.debug_imshow("ROI", roi, waitkey=True)
                 break
@@ -92,15 +93,22 @@ class PyImageSearchANPR:
     ###############################################################
 
     #################################################################
-    #region Deskew ROI
-    def getSkewAngle(binaryImage):
-        '''Get Skew angle'''
-        # Dilate
-    def deskew_roi(roi):
-        '''Deskew ROI
-        '''
-        pass 
-    #endregion Deskew ROI   
+    #region warp image  
+    # def warp_lp(self, img):
+    #     kernal = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
+    #     dilate = cv.dilate(img, kernal, iterations=3)
+    #     canny = cv.Canny(dilate, 0, 255, 1)
+
+    #     corners = cv.cv2.goodFeaturesToTrack(canny,4,0.01,10)
+    #     corners = np.int0(corners)
+    #     print(corners)
+    #     for corner in corners:
+    #         (x,y) = corner.ravel()
+    #         cv.circle(dilate, (x, y), 10, (0, 255, 0), -1)
+
+    #     self.debug_imshow("dilate", canny, waitkey=True)
+    #     self.debug_imshow("dilate", dilate, waitkey=True)
+    #endregion warp image   
     ##############################################################
 
     ###############################################################
@@ -132,8 +140,8 @@ class PyImageSearchANPR:
         if lp is not None:
             # OCR the license plate
             options = self.build_tesseract_options(psm=psm)
-            lpText = pytesseract.image_to_string(lp, config=options)
-            self.debug_imshow("License Plate", lp, waitkey=True)
+            lpText = pytesseract.image_to_string(lp,lang="eng",config=options)
+            self.debug_imshow("License Plate", lp, waitkey=False)
         
         return (lpText, lpCnt)
     #endregion Find and OCR
