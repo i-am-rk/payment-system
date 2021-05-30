@@ -106,7 +106,9 @@ class PyImageSearchANPR:
     #endregion Locate LP BlackHat Candidates
     ####################################################################
     
-    def locate_LP_canny_candidates(self, gray):
+    ##################################################################
+    #region Locate LP Canny Candidates
+    def locate_LP_canny_candidates(self, gray, keep=20):
         '''Locates License plate area candidates
         and returns list of likely contours containing license plates.
 
@@ -122,6 +124,10 @@ class PyImageSearchANPR:
 
         # return the list of countours
         return cnts
+    #endregion    
+    ##############################################################
+    
+
     ###############################################################
     #region Locate LP
     def locate_license_plate(self, gray, candidates, clearBorder=False, debug=False):
@@ -191,8 +197,9 @@ class PyImageSearchANPR:
         # license plate regions in the image, and then process the 
         # candidates, leaving us with the *actual* license plate
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-        candidates = self.locate_LP_blackhat_candidates(gray, debug=debug)
-        (lp, lpCnt) = self.locate_license_plate(gray, candidates, clearBorder=clearBorder, debug=debug)
+        BlackHatLPCandidates = self.locate_LP_blackhat_candidates(gray, debug=False)
+        CannyLPCandidates = self.locate_LP_canny_candidates(gray)
+        (lp, lpCnt) = self.locate_license_plate(gray, BlackHatLPCandidates, clearBorder=clearBorder, debug=debug)
         # only OCR the license plate if the license plate ROI is not 
         # empty
         if lp is not None:
