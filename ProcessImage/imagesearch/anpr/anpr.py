@@ -106,6 +106,22 @@ class PyImageSearchANPR:
     #endregion Locate LP BlackHat Candidates
     ####################################################################
     
+    def locate_LP_canny_candidates(self, gray):
+        '''Locates License plate area candidates
+        and returns list of likely contours containing license plates.
+
+        @gray => grayscale image provide by driver script
+        @keep => "up to this many" sorted license plate candidate contours.
+        '''
+        gray = cv.bilateralFilter(gray, 11, 17, 17)
+        edged = cv.Canny(gray, 170, 200)
+
+        cnts = cv.findContours(edged.copy(), cv.RETR_EXTERNAL, cv.CHAIN_APPROX_NONE)
+        cnts = imutils.grab_contours(cnts)
+        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:keep]
+
+        # return the list of countours
+        return cnts
     ###############################################################
     #region Locate LP
     def locate_license_plate(self, gray, candidates, clearBorder=False, debug=False):
