@@ -17,18 +17,14 @@ def cleanup_text(text):
     # using opencv
     print(text)
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
-
-def showImage(image):
-    pil_img = Image.fromarray(cv.cvtColor(image, cv.COLOR_BGR2RGB))
-    pil_img.show("Final")
 ############################################################3
 #region processLP
-def processLP(image,debug=False):
+def processLP(image,debug=True):
     anpr = PyImageSearchANPR(debug=debug)
     # image = imutils.resize(image, width=800)
 
     # apply automatic license plate recognition
-    (lpText, lpCnt) = anpr.find_and_ocr(image)
+    (lpText, lpCnt) = anpr.find_and_ocr(image, clearBorder=True, debug=debug)
     # only continue if the license plate was successfully OCR'd
     if lpText is not None and lpCnt is not None:
         # fit a rotated bounding box to the license plate contour and
@@ -52,6 +48,6 @@ def processLP(image,debug=False):
 def main(k):
     image = cv.imread('ProcessImage/license_plates/Cars1.png')
     (text, image) = processLP(image)
-    showImage(image)
+    # showImage(image)
 if __name__ == "__main__":
     main("test")

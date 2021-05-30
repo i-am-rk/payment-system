@@ -5,8 +5,9 @@ import pytesseract
 import numpy as np
 import imutils
 import cv2 as cv
-import matplotlib.pyplot as plt
 from PIL import Image
+from PyQt5 import QtWidgets, QtGui, QtCore
+from matplotlib import pyplot as plt
 
 class PyImageSearchANPR:
     '''Localises number plate and performs ocr
@@ -17,20 +18,35 @@ class PyImageSearchANPR:
         self.minAR = minAR
         self.maxAR = maxAR
         self.debug = debug
-    
-    def debug_imshow(self, title, image, waitkey=False):
-        # check to see if we are in debug mode, and if so show the 
-        # image with the supplied title
+        self.stagesList = []
+
+    ##############################################################################
+    #region Plot Images
+    def addStage(self, title, data, add=False, debug=False):
+        '''Adds process stage to list'''
+        if add and debug:
+            t = (title, data)
+            self.stagesList.append(t)
+
+    def showStages(self, cols=2):
+        num_of_stages = len(self.stagesList)
+        rows = len(self.stagesList) // cols if len(self.stagesList) % cols == 0 else len(self.stagesList) // cols + 1
+        for i in range(len(self.stagesList)):
+            (title, data) = self.stagesList[i]
+            plt.subplot(rows, cols, i+1)
+            plt.axis('off')
+            plt.imshow(cv.cvtColor(data, cv.COLOR_BGR2RGB))
+            plt.title(title)
 
         if self.debug:
-            # cv.imshow(title, image)
-            pil_img = Image.fromarray(cv.cvtColor(image, cv.COLOR_BGR2RGB))
-            if waitkey:
-                pil_img.show(title="test")
+            plt.show()
+    #endregion Plot Images
+    #######################################################################
+
 
     #####################################################################
     #region Locate LP Candidates            
-    def locate_license_plate_candidates(self, gray, keep=5):
+    def locate_license_plate_candidates(self, gray, keep=5, debug=False):
         '''Locates License plate area candidates
         and returns list of likely contours containing license plates.
 
@@ -42,14 +58,15 @@ class PyImageSearchANPR:
         # pop's up text in image
         rectKern = cv.getStructuringElement(cv.MORPH_RECT, (16, 5))
         blackhat = cv.morphologyEx(gray, cv.MORPH_BLACKHAT, rectKern) # reveals dark characters against light backgrounds
-        self.debug_imshow("Blackhat", blackhat,waitkey=True)
-
+        self.addStage("Blackhat", blackhat, add=True, debug=debug)
+        # self.showStages()
 
         # Find regions in imagae that are light
         squareKern = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
         light = cv.morphologyEx(gray, cv.MORPH_CLOSE, squareKern)
         light = cv.threshold(light, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)[1]
-        self.debug_imshow("Light Regions", light)
+        self.addStage("Light: higlights whites", light, add=True, debug=debug)
+        
 
         # compute teh scharr gradient representation of the blackhat
         # image in the x-direction and then scale the result back to
@@ -59,8 +76,7 @@ class PyImageSearchANPR:
         (minVal, maxVal) = (np.min(gradX), np.max(gradX))
         gradX = 255 * ((gradX - minVal) / (maxVal - minVal))
         gradX = gradX.astype("uint8")
-        self.debug_imshow("Scharr", gradX,waitkey=True)
-
+        self.addStage("Scharr Gradient", gradX, add=True,debug=debug)
         # smooth the group regions that may contain boundries to license plate characters
         # blur the gradient representation, applying a closing 
         # operation, and threshold the image using Otsu's method
@@ -70,15 +86,14 @@ class PyImageSearchANPR:
         thresh = cv.threshold(gradX, 0, 255, cv.THRESH_BINARY | cv.THRESH_OTSU)[1]
         thresh = cv.erode(thresh, None, iterations=1)
         thresh = cv.dilate(thresh, None, iterations=1)
-        self.debug_imshow("Grad Thresh", thresh, waitkey=True)
+        self.addStage("Grad Thresh", thresh, add=True,debug=debug)
 
         # take the bitwise and between the threshold result and the
         # light regions of the image
         thresh = cv.bitwise_and(thresh, thresh, mask=light)
         thresh = cv.dilate(thresh, None, iterations=2)
         thresh = cv.erode(thresh, None, iterations=1)
-        self.debug_imshow("final", thresh, waitkey=True)
-
+        self.addStage("Blackhat: Final", thresh, add=True,debug=debug)
         # find contours in the threshold image and sort them by 
         # their size in descending order, keeping only the largest
         # ones
@@ -93,7 +108,7 @@ class PyImageSearchANPR:
     
     ###############################################################
     #region Locate LP
-    def locate_license_plate(self, gray, candidates, clearBorder=False):
+    def locate_license_plate(self, gray, candidates, clearBorder=False, debug=False):
         '''Locate license plate from the list of contours of likely candidates
         '''
         # initialize the license plate contour and ROI
@@ -126,8 +141,9 @@ class PyImageSearchANPR:
                 # display the debugging information and then break
                 # from the loop early since we have found the license
                 #plate region
-                self.debug_imshow("Licese Plate", licensePlate)
-                self.debug_imshow("ROI", roi)
+                self.addStage("License Plate", licensePlate, add=True, debug=debug)
+                self.addStage("ROI", roi, add=True, debug=debug)
+                self.showStages()
                 break
         
         # return a 2-tuple of the license plate ROI and the contour
@@ -151,27 +167,33 @@ class PyImageSearchANPR:
 
     ###########################################################
     #region Find and OCR
-    def find_and_ocr(self, image, psm=7, clearBorder=False):
+    def find_and_ocr(self, image, psm=7, clearBorder=False, debug=False):
         # initialize the license plate text
         lpText = None
+        self.addStage("Original", image, add=True, debug=debug)
         # convert the input image to grayscale, locate all candidate
         # license plate regions in the image, and then process the 
         # candidates, leaving us with the *actual* license plate
         gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-        candidates = self.locate_license_plate_candidates(gray)
-        (lp, lpCnt) = self.locate_license_plate(gray, candidates, clearBorder=clearBorder)
+        candidates = self.locate_license_plate_candidates(gray, debug=debug)
+        (lp, lpCnt) = self.locate_license_plate(gray, candidates, clearBorder=clearBorder, debug=debug)
         # only OCR the license plate if the license plate ROI is not 
         # empty
         if lp is not None:
             # OCR the license plate
             options = self.build_tesseract_options(psm=psm)
             lpText = pytesseract.image_to_string(lp, config=options)
-            self.debug_imshow("License Plate", lp, waitkey=True)
+            # self.debug_imshow("License Plate", lp, waitkey=True)
         
         return (lpText, lpCnt)
     #endregion Find and OCR
     #############################################################
 
+    ################################################################
+    #region Find LP
+
+    #endregion Find LP
+    ###########################################################3
 
 
 
