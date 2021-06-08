@@ -7,6 +7,7 @@ from UI.Pages import page1
 
 import globalvariables as gv
 from ProcessImage.ocr_license_plate import processLP
+from PIMG.ocr import OCRFrame
 
 
 
@@ -54,10 +55,12 @@ class FeedWorker(QRunnable):
                 ret, frame = cap.read()
                 rgb_img = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
                 if gv.ProcessFrame: # process frame if variable is true
-                    (lpText, img) = processLP(frame, debug=True)
+                    # (lpText, img) = processLP(frame, debug=True)
+                    (lpText, img) = OCRFrame(frame)
                     gv.ProcessFrame = False
+                    print("inide thread")
                     self.signals.processedImage.emit(lpText, cv.cvtColor(img, cv.COLOR_BGR2RGB))
-                    time.sleep(3)
+                    time.sleep(2)
                 else:
                     self.signals.processedImage.emit(None,rgb_img)
         except Exception as e:

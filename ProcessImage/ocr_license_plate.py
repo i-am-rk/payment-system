@@ -1,5 +1,5 @@
-from imagesearch.anpr.anpr import PyImageSearchANPR
-# from ProcessImage.imagesearch.anpr.anpr import PyImageSearchANPR
+# from imagesearch.anpr.anpr import PyImageSearchANPR
+from ProcessImage.imagesearch.anpr.anpr import PyImageSearchANPR
 from imutils import paths
 from PIL import Image
 import argparse
@@ -19,7 +19,7 @@ def cleanup_text(text):
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 ############################################################3
 #region processLP
-def processLP(image,debug=True):
+def processLP(image,debug=False):
     anpr = PyImageSearchANPR(debug=debug)
     # image = imutils.resize(image, width=800)
 
